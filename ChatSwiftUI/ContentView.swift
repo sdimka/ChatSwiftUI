@@ -63,7 +63,27 @@ struct MainView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Main View")
+            
+            List(viewModel.chRecords, id: \.self) { record in
+                ChatMessageView(messageText: record.body, sender: record.sender)
+            }.listStyle(.plain)
+            .toolbar {
+                ToolbarItem(id: "plus", placement: .automatic, showsByDefault: true) {
+                    Button(action: {
+                        viewModel.insertRecord()
+                    }, label: {
+                        Image(systemName: "plus")
+                    })
+                }
+                ToolbarItem(id: "plus_rnd", placement: .automatic, showsByDefault: true) {
+                    Button(action: {
+                        viewModel.insertRandomRecord()
+                    }, label: {
+                        Image(systemName: "plus.app")
+                    })
+
+                }
+            }
 
             Button {
                 viewModel.performSearch()
@@ -83,6 +103,35 @@ struct MainView: View {
             }
         }.frame(alignment: .trailing)
         
+    }
+}
+
+struct ChatMessageView: View {
+    
+    let messageText: String
+    let sender: Int
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "circle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 35)
+                .foregroundColor(sender == 1 ? .chIcon1 : .chIcon2)
+            Text(messageText)
+                .font(.custom(
+                    "SFMono-Regular",
+                    fixedSize: 15))
+                .padding()
+                .background(.chBack)
+                .foregroundColor(.black)
+                .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
+                .overlay(alignment: .bottomLeading) {
+                    Image(systemName: "arrowtriangle.left.fill")
+                        .foregroundColor(.chBack)
+                        .offset(x: -10, y: -10)
+                }
+        }.listRowSeparator(.hidden)
     }
 }
 
