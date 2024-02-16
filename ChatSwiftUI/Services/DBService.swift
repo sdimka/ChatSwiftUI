@@ -40,7 +40,7 @@ class DBService {
     func getAllRecords() -> [CHRecord] {
         var records = [CHRecord]()
         do {
-            let result = try db.executeQuery("select sender, body from ch_records", values: nil)
+            let result = try db.executeQuery("select id, sender, body from ch_records", values: nil)
             while result.next() {
                 if let record = CHRecord(from: result) {
                     records.append(record)

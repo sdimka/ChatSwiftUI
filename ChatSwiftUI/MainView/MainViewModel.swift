@@ -6,26 +6,42 @@
 //
 
 import Foundation
+import OpenAI
 
 @Observable
 class MainViewModel {
     
     private let db = DBService()
+    private let ai = AIService()
     
     var isSearchEnabled = false
+    var isLoading = false
+    
+    var sendEnable: Bool {
+        return editText.isEmpty
+    }
     
     var chRecords = [CHRecord]()
     
-    func performSearch() {
-        print("Some text")
-        isSearchEnabled = !isSearchEnabled
+    var editText = ""
+    
+    func loadHistory() {
+        isLoading = true
+        print("Some text \(editText)")
+//        isSearchEnabled = !isSearchEnabled
         chRecords = db.getAllRecords()
+        isLoading = false
     }
     
     func insertRecord() {
-        let rec = CHRecord(from: 1, body: "Some string")
+        let rec = CHRecord(id: 10, sender: 1, body: editText)
         chRecords.append(rec)
         db.insert(rec)
+    }
+    
+    func editRecord() {
+        var rec = chRecords[chRecords.count - 1]
+        rec.body = "Other body"
     }
     
     func insertRandomRecord() {
@@ -41,6 +57,12 @@ class MainViewModel {
             }
         }
         task.resume()
+    }
+    
+    func sendRequest() {
+        let chat = Chat(role: Chat.Role.assistant, content: "Send test reply")
+        let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
+        ai.sendQuery(query: query)
     }
 
 }

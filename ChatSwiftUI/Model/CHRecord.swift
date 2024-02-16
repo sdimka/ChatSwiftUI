@@ -8,18 +8,22 @@
 import Foundation
 import FMDB
 
-struct CHRecord: Hashable, Decodable {
+struct CHRecord: Hashable, Decodable, Identifiable {
+    
+    var id: Int
     let sender: Int
-    let body: String
+    var body: String
     
     
-    init(from: Int, body: String) {
-        self.sender = from
+    init(id: Int, sender: Int, body: String) {
+        self.id = id
+        self.sender = sender
         self.body = body
     }
     
     init?(from result: FMResultSet) {
         if let body = result.string(forColumn: "body") {
+            self.id = Int(result.int(forColumn: "id"))
             self.sender = Int(result.int(forColumn: "sender"))
             self.body = body
         } else {
@@ -33,8 +37,8 @@ struct CHRecord: Hashable, Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = Int.random(in: 1..<100)
         sender = 1 // Int.random(in: 1..<100)
         body = try container.decode(String.self, forKey: .body)
-        
     }
 }
