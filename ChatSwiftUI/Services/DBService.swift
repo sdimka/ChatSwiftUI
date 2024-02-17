@@ -37,22 +37,37 @@ class DBService {
         self.db = db
     }
     
-    func getAllRecords() -> [CHRecord] {
+    func getAllRecords(completion: @escaping (Result<[CHRecord], Error>) -> Void) {
         var records = [CHRecord]()
         do {
             let result = try db.executeQuery("select id, sender, body from ch_records", values: nil)
             while result.next() {
                 if let record = CHRecord(from: result) {
                     records.append(record)
-                }
+                } 
             }
-            return records
+            completion(.success(records))
         } catch {
-            return records
+            completion(.failure(error))
         }
     }
     
-    func insert(_ record: CHRecord) {
+    func getAllRecordsAsync() async throws -> [CHRecord] {
+        try await withCheckedThrowingContinuation({ continuation in
+            getAllRecords{ res in
+                switch res {
+                case .success(let records):
+                    continuation.resume(returning: records)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+            
+        })
+    }
+
+    
+    func insert(_ record: CHRecord, completion: @escaping (Result<String, Error>) -> Void) {
         do {
             try db.executeUpdate(
                 """
@@ -61,10 +76,27 @@ class DBService {
                 """,
                 values: [record.sender, record.body]
             )
-//            users.append(user)
+            completion(.success("OK"))
         } catch {
-            fatalError("cannot insert user: \(error)")
+            completion(.failure(error))
+            return
         }
+    }
+    
+    func insertAsync(_ record: CHRecord) async throws -> String {
+        
+        let result: String = try await withCheckedThrowingContinuation({ continuation in
+            insert(record){ res in
+                switch res {
+                case .success(let success):
+                    continuation.resume(returning: success)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        })
+        
+        return result
     }
     
     

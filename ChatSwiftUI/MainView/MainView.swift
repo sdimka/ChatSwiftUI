@@ -14,8 +14,8 @@ struct MainView: View {
     var body: some View {
         VStack(alignment: .leading) {
             
-            AdvancedList($viewModel.chRecords) { $record in
-                ChatMessageView(record: $record)
+            List(viewModel.chRecords, id: \.self) { record in
+                ChatMessageView(messageText: record.body, sender: record.sender)
             }.listStyle(.plain)
             .toolbar {
                 ToolbarItem(id: "clockwise", placement: .automatic, showsByDefault: true) {
@@ -32,6 +32,17 @@ struct MainView: View {
                         Image(systemName: "plus.app")
                     })
 
+                }
+            }
+            if viewModel.isLoading {
+                HStack {
+                    Text("Some other text")
+//                        .alignmentGuide(.leading, computeValue: { d in d[.leading]})
+                    Spacer()
+                    ProgressView()
+//                        .alignmentGuide(.trailing, computeValue: { d in d[.trailing]})
+                        .padding()
+                        .transition(.opacity)
                 }
             }
             
@@ -66,16 +77,11 @@ struct MainView: View {
             }
         }
         .navigationTitle("MainView Title")
-
-        VStack(alignment: .leading){
-            if viewModel.isLoading {
-                ProgressView()
-                    .padding()
-                    .transition(.opacity)
-            }
-
-        }.frame(alignment: .trailing)
-            .task {
+        .frame(alignment: .trailing)
+        .alert(isPresented: $viewModel.errorEnable) {
+            Alert(title: Text("Error!"), message: Text(viewModel.errorMessage), dismissButton: .cancel())
+        }
+        .task {
                 viewModel.loadHistory()
             }
         

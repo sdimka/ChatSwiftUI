@@ -16,32 +16,55 @@ class MainViewModel {
     
     var isSearchEnabled = false
     var isLoading = false
+    var errorMessage: String = ""
+    var errorEnable: Bool = false
     
     var sendEnable: Bool {
-        return editText.isEmpty
+        return editText.isEmpty || isLoading
     }
+    
+    
     
     var chRecords = [CHRecord]()
     
     var editText = ""
     
+    @MainActor
     func loadHistory() {
         isLoading = true
-        print("Some text \(editText)")
-//        isSearchEnabled = !isSearchEnabled
-        chRecords = db.getAllRecords()
+        Task {
+            do {
+                try await chRecords = db.getAllRecordsAsync()
+            } catch {
+                emitError(String(describing: error))
+                print(error)
+            }
+        }
         isLoading = false
     }
     
     func insertRecord() {
+        isLoading = true
         let rec = CHRecord(id: 10, sender: 1, body: editText)
         chRecords.append(rec)
-        db.insert(rec)
+        Task {
+            do {
+                let _ = try await db.insertAsync(rec)
+                isLoading = false
+            } catch {
+//                print("DB failed with error: \(error)")
+                self.emitError(error.localizedDescription)
+                isLoading = false
+            }
+        }
     }
     
     func editRecord() {
-        var rec = chRecords[chRecords.count - 1]
-        rec.body = "Other body"
+        isLoading = true
+        Task {
+            try await Task.sleep(nanoseconds: 3_000_000_000)
+            isLoading = false
+        }
     }
     
     func insertRandomRecord() {
@@ -53,7 +76,9 @@ class MainViewModel {
             
             DispatchQueue.main.async {
                 let rec = try! JSONDecoder().decode(CHRecord.self, from: data)
-                self.db.insert(rec)
+                self.db.insert(rec){ res in
+                    print(res)
+                }
             }
         }
         task.resume()
@@ -63,6 +88,11 @@ class MainViewModel {
         let chat = Chat(role: Chat.Role.assistant, content: "Send test reply")
         let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
         ai.sendQuery(query: query)
+    }
+    
+    func emitError(_ message: String) {
+        errorMessage = message
+        errorEnable = true
     }
 
 }

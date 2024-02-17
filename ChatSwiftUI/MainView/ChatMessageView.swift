@@ -10,9 +10,9 @@ import SwiftUI
 
 struct ChatMessageView: View {
     
-    @Binding var record: CHRecord
-//    let messageText: String
-//    let sender: Int
+//    @Binding var record: CHRecord
+    var messageText: String
+    var sender: Int
     
     var body: some View {
         HStack {
@@ -20,8 +20,8 @@ struct ChatMessageView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 35)
-                .foregroundColor(record.sender == 1 ? .chIcon1 : .chIcon2)
-            Text(record.body)
+                .foregroundColor(sender == 1 ? .chIcon1 : .chIcon2)
+            Text(messageText)
                 .font(.custom(
                     "SFMono-Regular",
                     fixedSize: 15))
