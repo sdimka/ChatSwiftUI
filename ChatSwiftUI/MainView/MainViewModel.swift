@@ -7,29 +7,43 @@
 
 import Foundation
 import OpenAI
+import SwiftUI
 
-@Observable
-class MainViewModel {
+
+@MainActor
+class MainViewModel: ObservableObject {
     
     private let db = DBService()
     private let ai = AIService()
     
-    var isSearchEnabled = false
-    var isLoading = false
-    var errorMessage: String = ""
-    var errorEnable: Bool = false
+    @Published var isSearchEnabled = false
+    @Published var isOn = false
+    @Published var isLoading : Bool = false {
+            didSet {
+                withAnimation {
+                    if isLoading {
+                        isOn = true
+                    }
+                    else {
+                        isOn = false
+                    }
+                }
+            }
+        }
+    
+    @Published var errorMessage: String = ""
+    @Published var errorEnable: Bool = false
     
     var sendEnable: Bool {
         return editText.isEmpty || isLoading
     }
     
+    @Published var chRecords = [CHRecord]()
+    @Published var vm = ScrollToModel()
     
+    @Published var editText = ""
+    @Published var answerText = ""
     
-    var chRecords = [CHRecord]()
-    
-    var editText = ""
-    
-    @MainActor
     func loadHistory() {
         isLoading = true
         Task {
@@ -43,18 +57,18 @@ class MainViewModel {
         isLoading = false
     }
     
-    func insertRecord() {
-        isLoading = true
-        let rec = CHRecord(id: 10, sender: 1, body: editText)
+    func insertRecord(sender: Int, body: String) {
+//        isLoading = true
+        let rec = CHRecord(id: 10, sender: sender, body: body)
         chRecords.append(rec)
         Task {
             do {
                 let _ = try await db.insertAsync(rec)
-                isLoading = false
+//                isLoading = false
             } catch {
 //                print("DB failed with error: \(error)")
                 self.emitError(error.localizedDescription)
-                isLoading = false
+//                isLoading = false
             }
         }
     }
@@ -84,15 +98,41 @@ class MainViewModel {
         task.resume()
     }
     
-    func sendRequest() {
-        let chat = Chat(role: Chat.Role.assistant, content: "Send test reply")
-        let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
-        ai.sendQuery(query: query)
-    }
-    
     func emitError(_ message: String) {
         errorMessage = message
         errorEnable = true
+    }
+    
+    func sendAIReq() {
+        isLoading = true
+        insertRecord(sender: 1, body: editText)
+        let reqString = editText
+        editText = ""
+        answerText = ""
+        let chat = Chat(role: Chat.Role.assistant, content: reqString)
+        let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
+        Task {
+            do {
+                for try await result in ai.openAI.chatsStream(query: query) {
+                    if result.choices.count > 0 {
+                        let choice = result.choices[0]
+                        if choice.finishReason == nil {
+                            answerText = answerText.appending(choice.delta.content ?? "NoN")
+                        } else {
+                            try await Task.sleep(nanoseconds: 1_000_000_000)
+                            insertRecord(sender: 2, body: answerText)
+                            self.isLoading = false
+                        }
+//                        print("Choice: \(choice)")
+                    }
+//                    print("Data: \(result)")
+                }
+                
+            } catch {
+                emitError(error.localizedDescription)
+                print("Request failed with error: \(error)")
+            }
+        }
     }
 
 }

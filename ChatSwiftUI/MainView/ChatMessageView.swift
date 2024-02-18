@@ -24,7 +24,7 @@ struct ChatMessageView: View {
             Text(messageText)
                 .font(.custom(
                     "SFMono-Regular",
-                    fixedSize: 15))
+                    fixedSize: 14))
                 .textSelection(.enabled)
                 .padding()
                 .background(.chBack)

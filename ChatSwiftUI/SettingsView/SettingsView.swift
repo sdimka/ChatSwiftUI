@@ -14,7 +14,7 @@ struct SettingsView: View {
     @State private var viewModel = SettingsViewModel()
     
     var body: some View {
-        VStack{
+        VStack (alignment: .trailing){
             Spacer()
             HStack {
                 Text("API Key")
@@ -34,7 +34,7 @@ struct SettingsView: View {
                 viewModel.save()
             }, label: {
                 Label("SAVE", systemImage: "square.and.arrow.down")
-            })
+            }).padding(.top)
             
         }.padding()
             .task {
