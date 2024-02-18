@@ -12,7 +12,7 @@ class AIService {
     let openAI: OpenAI
     
     init() {
-        let openAI = OpenAI(apiToken: "")
+        let openAI = OpenAI(apiToken: "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")
         self.openAI = openAI
     }
     

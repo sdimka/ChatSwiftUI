@@ -30,6 +30,13 @@ class DBService {
         // 4 - Initial table creation
         do {
             try db.executeUpdate("create table if not exists ch_records(id INTEGER PRIMARY KEY AUTOINCREMENT, sender integer, body TEXT)", values: nil)
+            
+            try db.executeUpdate("""
+                                 CREATE TABLE if not exists params(id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                                   type_int integer,
+                                                                   value TEXT,
+                                 UNIQUE(type_int) ON CONFLICT IGNORE)
+                                """, values: nil)
         } catch {
             fatalError("cannot execute query")
         }
@@ -71,7 +78,7 @@ class DBService {
         do {
             try db.executeUpdate(
                 """
-                insert into ch_records (sender, body)
+                INSERT INTO ch_records (sender, body)
                 values (?, ?)
                 """,
                 values: [record.sender, record.body]
@@ -99,5 +106,37 @@ class DBService {
         return result
     }
     
+    func getParams(completion: @escaping (Result<[Param], Error>) -> Void) {
+        var records = [Param]()
+        do {
+            let result = try db.executeQuery("SELECT id, type_int, value FROM params", values: nil)
+            while result.next() {
+                if let record = Param(from: result) {
+                    records.append(record)
+                }
+            }
+            completion(.success(records))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func setParams(param: Param, completion: @escaping (Result<String, Error>) -> Void) {
+        do {
+            try db.executeUpdate(
+                """
+                INSERT INTO params (id, type_int, value)
+                VALUES (?, ?, ?)
+                ON CONFLICT(type_int)
+                DO UPDATE SET value = ?;
+                """,
+                values: [param.id, param.typeInt, param.value, param.value]
+            )
+            completion(.success("OK"))
+        } catch {
+            completion(.failure(error))
+            return
+        }
+    }
     
 }
