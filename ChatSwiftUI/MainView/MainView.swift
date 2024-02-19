@@ -51,7 +51,7 @@ struct MainView: View {
                             Button(action: {
                                 viewModel.vm.direction = .end
                             }, label: {
-                                Image(systemName: "plus.app")
+                                Image(systemName: "chevron.down")
                             })
                             
                         }
