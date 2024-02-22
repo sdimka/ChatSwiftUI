@@ -140,4 +140,25 @@ class DBService {
         }
     }
     
+    func getAiToken() async throws ->  String {
+        return try await withCheckedThrowingContinuation { continuation in
+            getParams { result in
+                switch result {
+                case .success(let params):
+                    if let key = params.first(where: { $0.type == .aiKey }) {
+                        continuation.resume(returning: key.value)
+                    } else {
+                        continuation.resume(throwing: DBErrors.notFound)
+                    }
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+}
+
+enum DBErrors: Error {
+    case notFound
 }

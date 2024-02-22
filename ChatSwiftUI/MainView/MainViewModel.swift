@@ -113,23 +113,26 @@ class MainViewModel {
         let reqString = editText
         editText = ""
         answerText = ""
-        let chat = Chat(role: Chat.Role.assistant, content: reqString)
-        let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
+        let chat = Chat(role: .assistant, content: reqString)
+        let query = ChatQuery(model: .gpt3_5Turbo, messages: [chat])
         Task {
             do {
-                for try await result in ai.openAI.chatsStream(query: query) {
-                    if result.choices.count > 0 {
-                        let choice = result.choices[0]
-                        if choice.finishReason == nil {
-                            answerText = answerText.appending(choice.delta.content ?? "NoN")
-                        } else {
+                let chat = try await ai.getChat()
+                for try await result in chat.chatsStream(query: query) {
+                    
+                    if let choice = result.choices.first {
+                        if let content = choice.delta.content {
+                            answerText.append(content)
+                        } 
+//                        else {
+//                            answerText.append("NoN")
+//                        }
+                        if choice.finishReason != nil {
                             try await Task.sleep(nanoseconds: 1_000_000_000)
                             insertRecord(sender: 2, body: answerText)
-                            self.isLoading = false
+                            isLoading = false
                         }
-//                        print("Choice: \(choice)")
                     }
-//                    print("Data: \(result)")
                 }
                 
             } catch {

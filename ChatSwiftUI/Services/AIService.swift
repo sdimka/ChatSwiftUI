@@ -7,18 +7,29 @@
 
 import Foundation
 import OpenAI
+import Resolver
 
 class AIService {
-    let openAI: OpenAI
+    private var openAI: OpenAI? = nil
+    private var token: String? = nil
     
-    init() {
-        let openAI = OpenAI(apiToken: "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")
-        self.openAI = openAI
+    @Injected private var db: DBService
+    
+    func getChat() async throws -> OpenAI {
+        let currToken = try await db.getAiToken()
+        if token == nil || token != currToken {
+            token = currToken
+            openAI = OpenAI(apiToken: token!)
+        }
+        guard let openAI = openAI else {
+            throw AIError.openAINotInitialized
+        }
+        return openAI
     }
     
     func sendQuery(query: ChatQuery) {
         print("Sending query")
-        openAI.chatsStream(query: query) { partialResult in
+        openAI?.chatsStream(query: query) { partialResult in
             switch partialResult {
             case .success(let result):
                 print(result.choices)
@@ -36,7 +47,7 @@ class AIService {
         let results: ChatStreamResult = try await withCheckedThrowingContinuation({ continuation in
             
             // Async task execute the `fetchAlbums(completion:)` function
-            openAI.chatsStream(query: query) { result in
+            openAI?.chatsStream(query: query) { result in
                 lock.lock()
                 defer { lock.unlock() }
                 
@@ -61,4 +72,8 @@ class AIService {
 //        return openAI.chatsStream(query: query)
 //
 //    }
+}
+
+enum AIError: Error {
+    case openAINotInitialized
 }

@@ -98,7 +98,7 @@ class TestViewModel {
         let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
         Task {
             do {
-                for try await result in ai.openAI.chatsStream(query: query) {
+                for try await result in try await ai.getChat().chatsStream(query: query) {
                     if result.choices.count > 0 {
                         let choice = result.choices[0]
                         if choice.finishReason == nil {
