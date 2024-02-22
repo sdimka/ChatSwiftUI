@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Resolver
 
 @Observable
 class SettingsViewModel {
@@ -13,7 +14,9 @@ class SettingsViewModel {
     var apiKey: String = ""
     var apiModel: String = ""
     
-    private let db = DBService()
+    @ObservationIgnored
+    @Injected private var db: DBService
+
     private var apiKeyParam: Param? = nil
     private var apiModelParam: Param? = nil
     

@@ -10,9 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject private var viewModel = MainViewModel()
-    var radius = 50.0
-    let animation = Animation.easeInOut(duration: 1) //.repeatForever(autoreverses: false)
+    @State private var viewModel = MainViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {

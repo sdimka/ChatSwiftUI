@@ -7,16 +7,18 @@
 
 import Foundation
 import OpenAI
+import Resolver
 
 
-@MainActor
-class TestViewModel: ObservableObject {
+@Observable
+class TestViewModel {
     
-    @Published var artists = [Artist]()
-    @Published var isLoading: Bool = false
-    @Published var textData: String = ""
+    var artists = [Artist]()
+    var isLoading: Bool = false
+    var textData: String = ""
     
-    private let ai = AIService()
+    @ObservationIgnored
+    @Injected private var ai: AIService
     
     init() {
         //        self.service = AsyncDataService()

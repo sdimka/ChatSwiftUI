@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Resolver
 
 struct Option: Hashable {
     let title: String
@@ -29,7 +30,7 @@ struct ContentView: View {
         .init(title: "Home", imageName: "house", item: .first),
         .init(title: "About", imageName: "info.circle", item: .second),
         .init(title: "Settings", imageName: "gear", item: .third),
-        .init(title: "Social", imageName: "message", item: .fourth),
+        .init(title: "Tests", imageName: "bolt.shield", item: .fourth),
     ]
     
     var body: some View {
@@ -43,13 +44,13 @@ struct ContentView: View {
             if let dest = currentOption {
                 switch dest {
                 case .first:
-                    MainView()
+                    Resolver.main.resolve(MainView.self)
                 case .second:
-                    SecondColumnView()
+                    Resolver.main.resolve(SecondColumnView.self)
                 case .third:
-                    SettingsView()
+                    Resolver.main.resolve(SettingsView.self)
                 case .fourth:
-                    TestView()
+                    Resolver.main.resolve(TestView.self)
                 }
             }
 

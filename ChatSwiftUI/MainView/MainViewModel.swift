@@ -8,17 +8,21 @@
 import Foundation
 import OpenAI
 import SwiftUI
+import Resolver
 
 
-@MainActor
-class MainViewModel: ObservableObject {
+//@MainActor
+@Observable 
+class MainViewModel {
     
-    private let db = DBService()
-    private let ai = AIService()
+    @ObservationIgnored
+    @Injected private var db: DBService
+    @ObservationIgnored
+    @Injected private var ai: AIService
     
-    @Published var isSearchEnabled = false
-    @Published var isOn = false
-    @Published var isLoading : Bool = false {
+    var isSearchEnabled = false
+    var isOn = false
+    var isLoading : Bool = false {
             didSet {
                 withAnimation {
                     if isLoading {
@@ -31,18 +35,18 @@ class MainViewModel: ObservableObject {
             }
         }
     
-    @Published var errorMessage: String = ""
-    @Published var errorEnable: Bool = false
+    var errorMessage: String = ""
+    var errorEnable: Bool = false
     
     var sendEnable: Bool {
         return editText.isEmpty || isLoading
     }
     
-    @Published var chRecords = [CHRecord]()
-    @Published var vm = ScrollToModel()
+    var chRecords = [CHRecord]()
+    var vm = ScrollToModel()
     
-    @Published var editText = ""
-    @Published var answerText = ""
+    var editText = ""
+    var answerText = ""
     
     func loadHistory() {
         isLoading = true

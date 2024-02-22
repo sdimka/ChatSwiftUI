@@ -11,7 +11,7 @@ import SwiftUI
 
 struct TestView: View {
     
-    @StateObject private var viewModel = TestViewModel()
+    @State private var viewModel = TestViewModel()
     
     var body: some View {
         VStack {
