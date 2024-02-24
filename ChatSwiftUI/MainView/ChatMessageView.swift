@@ -13,6 +13,20 @@ struct ChatMessageView: View {
 //    @Binding var record: CHRecord
     var messageText: String
     var sender: Int
+    @State var record: CHRecord?
+    @State var overRecordAnim = false
+    @State var overRecord : Bool = false {
+            didSet {
+                withAnimation {
+                    if overRecord {
+                        overRecordAnim = true
+                    }
+                    else {
+                        overRecordAnim = false
+                    }
+                }
+            }
+        }
     
     var body: some View {
         HStack {
@@ -35,6 +49,33 @@ struct ChatMessageView: View {
                         .foregroundColor(.chBack)
                         .offset(x: -10, y: -10)
                 }
+            if overRecordAnim {
+                    ChatMessagePopView(item: record!)
+            }
         }.listRowSeparator(.hidden)
+            .onHover(perform: { hovering in
+                overRecord = hovering
+            })
+//            .popover(item: $record) { itm in
+//                    
+//            }
+    }
+}
+
+struct ChatMessagePopView: View {
+    var item: CHRecord
+    
+    var body: some View {
+        HStack {
+            HStack {
+                Image(systemName: "seal.fill")
+                Text("\(item.sender)")
+//                    .fontWeight(.heavy)
+            }
+//            .font(.largeTitle)
+            .foregroundColor(.yellow)
+            .padding()
+            Text("\(item.id)")
+        }
     }
 }

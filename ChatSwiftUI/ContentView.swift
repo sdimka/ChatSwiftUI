@@ -75,6 +75,24 @@ struct SecondColumnView: View {
     }
 }
 
+struct EditTextModalView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
+    
+    var body: some View {
+      VStack(spacing: 50) {
+        Text("Information view.")
+          .font(.largeTitle)
+        
+        Button(action: {
+          presentationMode.wrappedValue.dismiss()
+        }, label: {
+          Label("Close", systemImage: "xmark.circle")
+        })
+      }
+    }
+}
+
 //#Preview {
 //    ContentView()
 //}

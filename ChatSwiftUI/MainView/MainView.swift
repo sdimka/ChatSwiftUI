@@ -11,13 +11,15 @@ import SwiftUI
 struct MainView: View {
     
     @State private var viewModel = MainViewModel()
+    @State var showInfoModalView: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
             // MARK: - List
             ScrollViewReader { scrollProxy in
                 List(viewModel.chRecords, id: \.self) { record in
-                    ChatMessageView(messageText: record.body, sender: record.sender)
+//                    ChatMessageView(messageText: record.body, sender: record.sender)
+                    ChatMessageView(messageText: record.body, sender: record.sender, record: record)
                 }.listStyle(.plain)
                     .onChange(of: viewModel.chRecords, {
                             withAnimation {
@@ -88,6 +90,15 @@ struct MainView: View {
                     .textFieldStyle(.roundedBorder)
                     .padding()
                     .navigationTitle("About you")
+                    .overlay(alignment: .topTrailing) {
+                        Button(action: {
+                            print("Button pressed")
+                            showInfoModalView = true
+                        }, label: {
+                            Image(systemName: "rectangle.expand.vertical")
+                                
+                        }).offset(x: -18, y: 18)
+                    }
                 VStack {
                     Button {
 //                        viewModel.insertRecord()
@@ -115,6 +126,9 @@ struct MainView: View {
         .frame(alignment: .trailing)
         .alert(isPresented: $viewModel.errorEnable) {
             Alert(title: Text("Error!"), message: Text(viewModel.errorMessage), dismissButton: .cancel())
+        }
+        .sheet(isPresented: $showInfoModalView) {
+            EditTextModalView()
         }
         .task {
             viewModel.loadHistory()
