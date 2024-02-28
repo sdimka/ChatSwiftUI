@@ -19,7 +19,7 @@ struct MainView: View {
             ScrollViewReader { scrollProxy in
                 List(viewModel.chRecords, id: \.self) { record in
 //                    ChatMessageView(messageText: record.body, sender: record.sender)
-                    ChatMessageView(messageText: record.body, sender: record.sender, record: record)
+                    ChatMessageView(record: record)
                 }.listStyle(.plain)
                     .onChange(of: viewModel.chRecords, {
                             withAnimation {
@@ -81,46 +81,55 @@ struct MainView: View {
                 }
             
             // MARK: - Edit field
+//            HStackLayout(alignment: .bottom, spacing: 0) {
             HStack {
-                TextEditor(text: $viewModel.editText)
-                    .font(.custom(
-                        "SFMono-Regular",
-                        fixedSize: 14))
-                    .frame(height: 150)
-                    .textFieldStyle(.roundedBorder)
-                    .padding()
-                    .navigationTitle("About you")
-                    .overlay(alignment: .topTrailing) {
-                        Button(action: {
-                            print("Button pressed")
-                            showInfoModalView = true
-                        }, label: {
-                            Image(systemName: "rectangle.expand.vertical")
-                                
-                        }).offset(x: -18, y: 18)
+                    ZStack(alignment: .bottom) {
+                        Color.gray.opacity(0.3).clipShape(RoundedRectangle(cornerRadius: 12))
+                        
+                        TextEditor(text: $viewModel.editText)
+                            .font(.custom(
+                                "SFMono-Regular",
+                                fixedSize: 14))
+                            .frame(minHeight: 50)
+                            .cornerRadius(12)
+//                            .border(.black)
+                            .padding(3)
+                            .overlay(alignment: .topTrailing) {
+                                Button(action: {
+                                    print("Button pressed")
+                                    showInfoModalView = true
+                                }, label: {
+                                    Image(systemName: "rectangle.expand.vertical")
+                                    
+                                }).offset(x: -18, y: 18)
+                            }
                     }
-                VStack {
-                    Button {
-//                        viewModel.insertRecord()
-                        viewModel.sendAIReq()
-                    } label: {
-                        Text("SEND")
-                            .frame(width: 150, height: 40)
+                    VStack {
+                        Button {
+    //                        viewModel.insertRecord()
+                            viewModel.sendAIReq()
+                        } label: {
+                            Text("SEND")
+                                .frame(width: 150, height: 40)
+                        }
+                        .disabled(viewModel.sendEnable)
+                        .buttonStyle(.bordered)
+                        .padding()
+                        
+                        Button {
+                            viewModel.editRecord()
+                        } label: {
+                            Text("Test")
+                                .frame(width: 150, height: 40)
+                        }
+                        .buttonStyle(.bordered)
+                        .padding()
                     }
-                    .disabled(viewModel.sendEnable)
-                    .buttonStyle(.bordered)
-                    .padding()
                     
-                    Button {
-                        viewModel.editRecord()
-                    } label: {
-                        Text("Test")
-                            .frame(width: 150, height: 40)
-                    }
-                    .buttonStyle(.bordered)
-                    .padding()
-                }
-            }.background(.chBack)
+                }.frame(maxHeight: 150)
+                .padding()
+
+//            }.background(.chBack)
         }.background(.white)
         .navigationTitle("MainView Title")
         .frame(alignment: .trailing)

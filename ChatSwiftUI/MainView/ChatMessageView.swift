@@ -11,8 +11,8 @@ import SwiftUI
 struct ChatMessageView: View {
     
 //    @Binding var record: CHRecord
-    var messageText: String
-    var sender: Int
+//    var messageText: String
+//    var sender: Int
     @State var record: CHRecord?
     @State var overRecordAnim = false
     @State var overRecord : Bool = false {
@@ -30,29 +30,36 @@ struct ChatMessageView: View {
     
     var body: some View {
         HStack {
-            Image(systemName: "circle")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 35)
-                .foregroundColor(sender == 1 ? .chIcon1 : .chIcon2)
-            Text(messageText)
-                .font(.custom(
-                    "SFMono-Regular",
-                    fixedSize: 14))
-                .textSelection(.enabled)
-                .padding()
-                .background(.chBack)
-                .foregroundColor(.black)
-                .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
-                .overlay(alignment: .bottomLeading) {
-                    Image(systemName: "arrowtriangle.left.fill")
-                        .foregroundColor(.chBack)
-                        .offset(x: -10, y: -10)
-                }
+            HStackLayout{
+                Image(systemName: "circle")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 35)
+                    .foregroundColor(record!.sender == 1 ? .chIcon1 : .chIcon2)
+                Text(record!.body)
+                    .font(.custom(
+                        "SFMono-Regular",
+                        fixedSize: 14))
+                    .textSelection(.enabled)
+//                    .frame(minWidth: 100, maxWidth: 900)
+                    .padding()
+                    .background(.chBack)
+                    .foregroundColor(.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
+                    .overlay(alignment: .bottomLeading) {
+                        Image(systemName: "arrowtriangle.left.fill")
+                            .foregroundColor(.chBack)
+                            .offset(x: -10, y: -10)
+                    }
+            }
+//            .frame(maxWidth: 900, alignment: .leading)
+
+            
             if overRecordAnim {
                     ChatMessagePopView(item: record!)
             }
-        }.listRowSeparator(.hidden)
+        }
+        .listRowSeparator(.hidden)
             .onHover(perform: { hovering in
                 overRecord = hovering
             })
