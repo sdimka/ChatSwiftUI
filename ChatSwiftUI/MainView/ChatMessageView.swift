@@ -41,7 +41,7 @@ struct ChatMessageView: View {
                         "SFMono-Regular",
                         fixedSize: 14))
                     .textSelection(.enabled)
-//                    .frame(minWidth: 100, maxWidth: 900)
+                    .frame(maxWidth: 900, alignment: .leading)
                     .padding()
                     .background(.chBack)
                     .foregroundColor(.black)
