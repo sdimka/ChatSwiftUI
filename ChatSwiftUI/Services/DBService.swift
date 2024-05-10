@@ -12,6 +12,8 @@ import FMDB
 class DBService {
     
     private let db: FMDatabase
+    private let qh = QueryHolder()
+    private var dbPath: String
     
     init(fileName: String = "test") {
         print("DB Service init")
@@ -19,25 +21,23 @@ class DBService {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(fileName).sqlite")
-        print("DB path: \(fileURL)")
-        // 2 - Create FMDatabase from filePath
+        dbPath = fileURL.absoluteString
+        //print("DB path: \(fileURL)")
+        // Create FMDatabase from filePath
         let db = FMDatabase(url: fileURL)
         
-        // 3 - Open connection to database
+        // Open connection to database
         guard db.open() else {
             fatalError("Unable to open database")
         }
         
-        // 4 - Initial table creation
+        // Initial table creation
         do {
-            try db.executeUpdate("create table if not exists ch_records(id INTEGER PRIMARY KEY AUTOINCREMENT, sender integer, body TEXT)", values: nil)
+            try db.executeUpdate(qh.createTableChats, values: nil)
+            try db.executeUpdate(qh.createTableChRecords, values: nil)
+            try db.executeUpdate(qh.createIndexChRecords, values: nil)
             
-            try db.executeUpdate("""
-                                 CREATE TABLE if not exists params(id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                                   type_int integer,
-                                                                   value TEXT,
-                                 UNIQUE(type_int) ON CONFLICT IGNORE)
-                                """, values: nil)
+            try db.executeUpdate(qh.createTableParams, values: nil)
         } catch {
             fatalError("cannot execute query")
         }
@@ -45,10 +45,19 @@ class DBService {
         self.db = db
     }
     
+    func getDBPath() -> String {
+        return dbPath
+    }
+    
     func getAllRecords(completion: @escaping (Result<[CHRecord], Error>) -> Void) {
         var records = [CHRecord]()
+        let q = """
+            SELECT id, sender, body
+            FROM ch_records_new
+            WHERE chat_id = ?
+        """
         do {
-            let result = try db.executeQuery("select id, sender, body from ch_records", values: nil)
+            let result = try db.executeQuery(q, values: [1])
             while result.next() {
                 if let record = CHRecord(from: result) {
                     records.append(record)

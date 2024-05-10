@@ -24,6 +24,7 @@ enum Item: String {
 
 struct ContentView: View {
     
+    let nsObject = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
     @State var currentOption: Item? = .first
     
     let options: [Option] = [
@@ -38,7 +39,8 @@ struct ContentView: View {
             SidebarView(options: options, currentSelection: $currentOption)
 //            List(options, id: \.self, selection: $currentOption) { option in
 //                NavigationLink(value: option.item, label: { Label(option.title, systemImage: option.imageName) })
-//            }
+//
+            Text("ver: \(nsObject ?? "No ver info")").padding()
           
         } detail: {
             if let dest = currentOption {

@@ -13,6 +13,7 @@ class SettingsViewModel {
     
     var apiKey: String = ""
     var apiModel: String = ""
+    var dbPath: String = ""
     
     @ObservationIgnored
     @Injected private var db: DBService
@@ -21,8 +22,7 @@ class SettingsViewModel {
     private var apiModelParam: Param? = nil
     
     init() {
-//        let paprams =
-
+        dbPath = db.getDBPath()
     }
     
     func update(){

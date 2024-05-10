@@ -9,8 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SettingsView: View {
-//    @State var someText: String = ""
-//    @State var someText1: String = ""
+
     @State private var viewModel = SettingsViewModel()
     
     var body: some View {
@@ -27,6 +26,12 @@ struct SettingsView: View {
                 Text("API Model")
                 TextField(text: $viewModel.apiModel, 
                           label: { Label("API Model", systemImage: "figure.walk.diamond")})
+                .frame(width: 350)
+            }
+            
+            HStack {
+                Text("DP Path:")
+                Text(viewModel.dbPath).textSelection(.enabled)
                 .frame(width: 350)
             }
             
