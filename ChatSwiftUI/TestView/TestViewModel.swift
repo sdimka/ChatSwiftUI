@@ -94,8 +94,8 @@ class TestViewModel {
     
     func getAIReq() {
         self.isLoading = true
-        let chat = Chat(role: Chat.Role.assistant, content: "Send test reply")
-        let query = ChatQuery(model: Model.gpt3_5Turbo, messages: [chat])
+        let chatMessage = [ChatQuery.ChatCompletionMessageParam(role: .user, content: "Send test reply")!]
+        let query = ChatQuery(messages: chatMessage, model: .gpt3_5Turbo)
         Task {
             do {
                 for try await result in try await ai.getChat().chatsStream(query: query) {

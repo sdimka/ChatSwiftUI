@@ -113,8 +113,9 @@ class MainViewModel {
         let reqString = editText
         editText = ""
         answerText = ""
-        let chat = Chat(role: .assistant, content: reqString)
-        let query = ChatQuery(model: .gpt3_5Turbo, messages: [chat])
+//        let chat = ChatCompletionMessageParam(role: .user, content: reqString)
+        let chatMessage = [ChatQuery.ChatCompletionMessageParam(role: .user, content: reqString)!]
+        let query = ChatQuery(messages: chatMessage, model: .gpt3_5Turbo)
         Task {
             do {
                 let chat = try await ai.getChat()

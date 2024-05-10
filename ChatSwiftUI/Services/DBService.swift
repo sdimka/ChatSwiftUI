@@ -19,7 +19,7 @@ class DBService {
         let fileURL = try! FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             .appendingPathComponent("\(fileName).sqlite")
-//        print("DB path: \(fileURL)")
+        print("DB path: \(fileURL)")
         // 2 - Create FMDatabase from filePath
         let db = FMDatabase(url: fileURL)
         
