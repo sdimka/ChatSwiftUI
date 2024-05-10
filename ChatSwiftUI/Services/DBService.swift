@@ -82,7 +82,7 @@ class DBService {
         })
     }
     
-    func getAllRecords(completion: @escaping (Result<[CHRecord], Error>) -> Void) {
+    func getAllRecords(chatId: Int, completion: @escaping (Result<[CHRecord], Error>) -> Void) {
         var records = [CHRecord]()
         let q = """
             SELECT id, sender, body
@@ -90,7 +90,7 @@ class DBService {
             WHERE chat_id = ?
         """
         do {
-            let result = try db.executeQuery(q, values: [1])
+            let result = try db.executeQuery(q, values: [chatId])
             while result.next() {
                 if let record = CHRecord(from: result) {
                     records.append(record)
@@ -102,9 +102,9 @@ class DBService {
         }
     }
     
-    func getAllRecordsAsync() async throws -> [CHRecord] {
-        try await withCheckedThrowingContinuation({ continuation in
-            getAllRecords{ res in
+    func getAllRecordsAsync(chatId: Int) async throws -> [CHRecord] {
+        return try await withCheckedThrowingContinuation({ continuation in
+            getAllRecords(chatId: chatId){ res in
                 switch res {
                 case .success(let records):
                     continuation.resume(returning: records)

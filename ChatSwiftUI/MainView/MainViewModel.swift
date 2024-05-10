@@ -42,6 +42,13 @@ class MainViewModel {
         return editText.isEmpty || isLoading
     }
     
+    var chats = [Chat]()
+    var selectedChart: Int? = 1 {
+        willSet(newVal) {
+            loadChatData(chatId: newVal!)
+        }
+    }
+    
     var chRecords = [CHRecord]()
     var vm = ScrollToModel()
     
@@ -52,7 +59,11 @@ class MainViewModel {
         isLoading = true
         Task {
             do {
-                try await chRecords = db.getAllRecordsAsync()
+                try await chats = db.getChatsAsync()
+                guard let firstId = chats.first?.id else {
+                    return
+                }
+                selectedChart = firstId
             } catch {
                 emitError(String(describing: error))
                 print(error)
@@ -60,6 +71,17 @@ class MainViewModel {
         }
         isLoading = false
     }
+    
+    func loadChatData(chatId: Int) {
+        Task {
+            do {
+                try await chRecords = db.getAllRecordsAsync(chatId: chatId)
+            } catch {
+                emitError(String(describing: error))
+            }
+        }
+    }
+            
     
     func insertRecord(sender: Int, body: String) {
 //        isLoading = true

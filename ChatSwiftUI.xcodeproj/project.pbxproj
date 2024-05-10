@@ -34,6 +34,7 @@
 		13B108952B7B44B200FA34AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B108942B7B44B200FA34AA /* ContentView.swift */; };
 		13B108972B7B44B400FA34AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B108962B7B44B400FA34AA /* Assets.xcassets */; };
 		13B1089A2B7B44B400FA34AA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B108992B7B44B400FA34AA /* Preview Assets.xcassets */; };
+		727EB89C2BEE4BAF0032C067 /* ChatSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		13B108962B7B44B400FA34AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13B108992B7B44B400FA34AA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		13B1089B2B7B44B400FA34AA /* ChatSwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatSwiftUI.entitlements; sourceTree = "<group>"; };
+		727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				133DADE62B7F9DFA00A38ABE /* MainView.swift */,
 				133DADE82B7FA55400A38ABE /* AdvancedList.swift */,
 				133DADEA2B7FA98D00A38ABE /* ChatMessageView.swift */,
+				727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -216,7 +219,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					13B1088E2B7B44B200FA34AA = {
 						CreatedOnToolsVersion = 15.2;
@@ -282,6 +285,7 @@
 				133DADED2B80B2E400A38ABE /* Params.swift in Sources */,
 				1386DFE52BEE196C00C50956 /* Chat.swift in Sources */,
 				139EBA672B7D046800F31080 /* AIService.swift in Sources */,
+				727EB89C2BEE4BAF0032C067 /* ChatSelectorView.swift in Sources */,
 				133DADE92B7FA55400A38ABE /* AdvancedList.swift in Sources */,
 				139EBA532B7B9DC800F31080 /* SidebarView.swift in Sources */,
 				139EBA562B7CA83800F31080 /* MainViewModel.swift in Sources */,
@@ -325,6 +329,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -388,6 +393,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -419,6 +425,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ChatSwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = J34YYH46QN;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -447,6 +454,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ChatSwiftUI/Preview Content\"";
 				DEVELOPMENT_TEAM = J34YYH46QN;
 				ENABLE_HARDENED_RUNTIME = YES;

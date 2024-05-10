@@ -12,38 +12,38 @@ import Resolver
 struct MainView: View {
     
     @State private var viewModel = Resolver.resolve(MainViewModel.self)
+//    @State private var chatSelection: Int?
     @State var showInfoModalView: Bool = false
     
     var body: some View {
-        VStack(alignment: .leading) {
-            // MARK: - List
-            //            VStack{}
-            chatBody()
-            // MARK: - Answer pop-up element
-            
-            if viewModel.isOn {
-                HStack {
-                    ProgressView()
-                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
-                        .padding()
-                        .transition(.opacity)
-                    
-                    Text(viewModel.answerText)
-                        .font(.custom(
-                            "SFMono-Regular",
-                            fixedSize: 14))
-                        .textSelection(.enabled)
-                        .padding()
-                        .background(.chBack)
-                        .foregroundColor(.black)
-                        .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
-                    
-                }.background(.white)
+        HStack() {
+
+            chatSelector()
+            Divider()
+            VStack(alignment: .leading) {
+                chatBody()
+                
+                if viewModel.isOn {
+                    HStack {
+                        ProgressView()
+                            .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                            .padding()
+                            .transition(.opacity)
+                        
+                        Text(viewModel.answerText)
+                            .font(.custom(
+                                "SFMono-Regular",
+                                fixedSize: 14))
+                            .textSelection(.enabled)
+                            .padding()
+                            .background(.chBack)
+                            .foregroundColor(.black)
+                            .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
+                    }.background(.white)
+                }
+                
+                messageEditPart()
             }
-            
-            // MARK: - Edit field
-            messageEditPart()
-            
         }
         .background(.white)
         .navigationTitle("MainView Title")
@@ -76,10 +76,24 @@ struct MainView: View {
         }
     }
     
+    private func chatSelector() -> some View {
+        VStack {
+            List(viewModel.chats, id: \.self) { record in
+                ChatSelectorView(record: record, selectedChat: $viewModel.selectedChart)
+            }.listStyle(.plain)
+            Divider()
+            
+            Text("You selected \(viewModel.selectedChart)").padding()
+
+            
+        }.frame(maxWidth: 200)
+        
+    }
+    
     private func chatBody() -> some View {
         ScrollViewReader { scrollProxy in
             List(viewModel.chRecords, id: \.self) { record in
-                //                    ChatMessageView(messageText: record.body, sender: record.sender)
+                // ChatMessageView(messageText: record.body, sender: record.sender)
                 ChatMessageView(record: record)
             }.listStyle(.plain)
                 .onChange(of: viewModel.chRecords, {
@@ -128,7 +142,6 @@ struct MainView: View {
             }
             VStack {
                 Button {
-                    //                        viewModel.insertRecord()
                     viewModel.sendAIReq()
                 } label: {
                     Text("SEND")
