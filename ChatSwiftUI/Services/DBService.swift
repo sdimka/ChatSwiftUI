@@ -49,6 +49,39 @@ class DBService {
         return dbPath
     }
     
+    func getChats(completion: @escaping (Result<[Chat], Error>) -> Void) {
+        var chats = [Chat]()
+        let q = """
+            SELECT *
+            FROM chats
+        """
+        do {
+            let result = try db.executeQuery(q, values: nil)
+            while result.next() {
+                if let record = Chat(from: result) {
+                    chats.append(record)
+                }
+            }
+            completion(.success(chats))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
+    func getChatsAsync() async throws -> [Chat] {
+        try await withCheckedThrowingContinuation({ continuation in
+            getChats{ res in
+                switch res {
+                case .success(let chats):
+                    continuation.resume(returning: chats)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+            
+        })
+    }
+    
     func getAllRecords(completion: @escaping (Result<[CHRecord], Error>) -> Void) {
         var records = [CHRecord]()
         let q = """

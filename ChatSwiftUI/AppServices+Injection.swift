@@ -22,4 +22,11 @@ extension Resolver {
         register{ SettingsView() }.scope(.application)
         register{ TestView() }.scope(.application)
     }
+    
+    public static func registerViewModels() {
+        register{ MainViewModel() }.scope(.application)
+//        register{ SecondColumnView() }.scope(.application)
+//        register{ SettingsView() }.scope(.application)
+//        register{ TestView() }.scope(.application)
+    }
 }
