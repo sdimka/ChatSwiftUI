@@ -80,13 +80,15 @@ struct MainView: View {
         VStack {
             List(viewModel.chats, id: \.self) { record in
                 ChatSelectorView(record: record, selectedChat: $viewModel.selectedChart)
-            }.listStyle(.plain)
+            }.listSectionSeparator(.hidden)
+            
             Divider()
             
             Text("You selected \(viewModel.selectedChart)").padding()
 
             
         }.frame(maxWidth: 200)
+            
         
     }
     
