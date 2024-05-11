@@ -11,12 +11,14 @@ import FMDB
 struct CHRecord: Hashable, Decodable, Identifiable {
     
     var id: Int
+    var chatId: Int
     let sender: Int
     var body: String
     
     
-    init(id: Int, sender: Int, body: String) {
+    init(id: Int, chatId: Int, sender: Int, body: String) {
         self.id = id
+        self.chatId = chatId
         self.sender = sender
         self.body = body
     }
@@ -24,6 +26,7 @@ struct CHRecord: Hashable, Decodable, Identifiable {
     init?(from result: FMResultSet) {
         if let body = result.string(forColumn: "body") {
             self.id = Int(result.int(forColumn: "id"))
+            self.chatId = Int(result.int(forColumn: "chat_id"))
             self.sender = Int(result.int(forColumn: "sender"))
             self.body = body
         } else {
@@ -40,5 +43,6 @@ struct CHRecord: Hashable, Decodable, Identifiable {
         id = Int.random(in: 1..<100)
         sender = 1 // Int.random(in: 1..<100)
         body = try container.decode(String.self, forKey: .body)
+        chatId = 1
     }
 }

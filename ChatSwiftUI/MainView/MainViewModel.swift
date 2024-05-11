@@ -83,9 +83,9 @@ class MainViewModel {
     }
             
     
-    func insertRecord(sender: Int, body: String) {
+    func insertRecord(chatId: Int, sender: Int, body: String) {
 //        isLoading = true
-        let rec = CHRecord(id: 10, sender: sender, body: body)
+        let rec = CHRecord(id: 10, chatId: chatId, sender: sender, body: body)
         chRecords.append(rec)
         Task {
             do {
@@ -131,7 +131,8 @@ class MainViewModel {
     
     func sendAIReq() {
         isLoading = true
-        insertRecord(sender: 1, body: editText)
+        let currentChatId: Int = selectedChart!
+        insertRecord(chatId: currentChatId, sender: 1, body: editText)
         let reqString = editText
         editText = ""
         answerText = ""
@@ -152,7 +153,7 @@ class MainViewModel {
 //                        }
                         if choice.finishReason != nil {
                             try await Task.sleep(nanoseconds: 1_000_000_000)
-                            insertRecord(sender: 2, body: answerText)
+                            insertRecord(chatId: currentChatId, sender: 2, body: answerText)
                             isLoading = false
                         }
                     }
