@@ -25,17 +25,10 @@ struct ChatSelectorView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
     
-//                Image(systemName: "ellipsis")
-//                    .frame(maxWidth: .infinity, alignment: .trailing)
-//                    .padding(.trailing)
-//                    .onTapGesture {
-//                        print("Tapped")
-//                        picker = true
-//                    }
                 Menu {
                     Button {
                     } label: {
-                        Label("New Album", systemImage: "rectangle.stack.badge.plus")
+                        Label("Edit Name", systemImage: "rectangle.stack.badge.plus")
                     }
                     Button {
                     } label: {
@@ -43,7 +36,7 @@ struct ChatSelectorView: View {
                     }
                     Button {
                     } label: {
-                        Label("New Shared Album", systemImage: "rectangle.stack.badge.person.crop")
+                        Label("Delete", systemImage: "rectangle.stack.badge.person.crop")
                     }
                 } label: {
                     Image(systemName: "ellipsis")
@@ -58,17 +51,6 @@ struct ChatSelectorView: View {
             .onTapGesture {
                 self.selectedChat = self.record.id
             }
-//        .overlay(
-//                VStack{
-//                    if picker {
-//                        ChatSelectorMenu(action: { data in
-//                            print(data)
-//                        })
-//                    }
-//                }
-//            )
-
-        
     }
     
     private func getColor(sc: Int?) -> Color {

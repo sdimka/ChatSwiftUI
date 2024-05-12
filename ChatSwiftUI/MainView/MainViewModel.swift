@@ -131,19 +131,26 @@ class MainViewModel {
     
     func sendAIReq() {
         isLoading = true
-        let currentChatId: Int = selectedChart!
+        guard let currentChatId = selectedChart else { return }
+        
         insertRecord(chatId: currentChatId, sender: 1, body: editText)
+        
         let reqString = editText
         editText = ""
         answerText = ""
+        
 //        let chat = ChatCompletionMessageParam(role: .user, content: reqString)
-        let chatMessage = [ChatQuery.ChatCompletionMessageParam(role: .user, content: reqString)!]
-        let query = ChatQuery(messages: chatMessage, model: .gpt3_5Turbo)
+        let chatMessage1 = ChatQuery.ChatCompletionMessageParam(role: .user, content: reqString)!
+//        let chatMessage2 = ChatQuery.ChatCompletionMessageParam(role: .system, content: "You are senior developer, all code writen in swift")!
+        let query = ChatQuery(messages: [chatMessage1], model: .gpt3_5Turbo)
+        
         Task {
             do {
-                let chat = try await ai.getChat()
-                for try await result in chat.chatsStream(query: query) {
-                    
+//                let chat = try await ai.getChat()
+//                for try await result in chat.chatsStream(query: query)
+                        
+                for try await result in try ai.reqV3(query: query) {
+
                     if let choice = result.choices.first {
                         if let content = choice.delta.content {
                             answerText.append(content)
