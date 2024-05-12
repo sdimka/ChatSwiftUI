@@ -149,6 +149,37 @@ class DBService {
         return result
     }
     
+    func deleteRecord(_ record: CHRecord, completion: @escaping (Result<String, Error>) -> Void) {
+        do {
+            try db.executeUpdate(
+                """
+                DELETE FROM ch_records_new WHERE id = ?;
+                """,
+                values: [record.id]
+            )
+            completion(.success("OK"))
+        } catch {
+            completion(.failure(error))
+            return
+        }
+    }
+    
+    func deleteRecordAsync(_ record: CHRecord) async throws -> String {
+        
+        let result: String = try await withCheckedThrowingContinuation({ continuation in
+            deleteRecord(record){ res in
+                switch res {
+                case .success(let success):
+                    continuation.resume(returning: success)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        })
+        
+        return result
+    }
+    
     func getParams(completion: @escaping (Result<[Param], Error>) -> Void) {
         var records = [Param]()
         do {

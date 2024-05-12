@@ -99,6 +99,22 @@ class MainViewModel {
         }
     }
     
+    func deleteRecord(message: CHRecord) {
+        isLoading = true
+        Task { @MainActor in
+            do {
+                let _ = try await db.deleteRecordAsync(message)
+                guard let selectedChart = selectedChart else { return }
+                try await chRecords = db.getAllRecordsAsync(chatId: selectedChart)
+                isLoading = false
+                
+            } catch {
+                self.emitError(error.localizedDescription)
+                isLoading = false
+            }
+        }
+    }
+    
     func editRecord() {
         isLoading = true
         Task {

@@ -14,6 +14,8 @@ struct MainView: View {
     @State private var viewModel = Resolver.resolve(MainViewModel.self)
 //    @State private var chatSelection: Int?
     @State var showInfoModalView: Bool = false
+    @State private var deleteRecordConfirmShown = false
+    @State private var messageToDelete: CHRecord? = nil
     
     var body: some View {
         HStack() {
@@ -96,7 +98,7 @@ struct MainView: View {
         ScrollViewReader { scrollProxy in
             List(viewModel.chRecords, id: \.self) { record in
                 // ChatMessageView(messageText: record.body, sender: record.sender)
-                ChatMessageView(record: record)
+                ChatMessageView(record: record, onDelete: self.onChatMessageDelete)
             }.listStyle(.plain)
                 .onChange(of: viewModel.chRecords, {
                     withAnimation {
@@ -116,6 +118,16 @@ struct MainView: View {
                         }
                     }
                 }
+        }.confirmationDialog(
+            "Are you sure to delete \(String(messageToDelete?.id ?? 0))?",
+            isPresented: $deleteRecordConfirmShown
+        ) {
+            Button("Yes") {
+                withAnimation {
+                    guard let messageToDelete = messageToDelete else { return }
+                    viewModel.deleteRecord(message: messageToDelete)
+                }
+            }
         }
     }
     
@@ -165,6 +177,11 @@ struct MainView: View {
             
         }.frame(maxHeight: 150)
             .padding()
+    }
+    
+    func onChatMessageDelete(message: CHRecord) {
+        deleteRecordConfirmShown = true
+        messageToDelete = message
     }
 }
 

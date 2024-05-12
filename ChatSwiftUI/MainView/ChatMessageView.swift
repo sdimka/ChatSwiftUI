@@ -10,10 +10,8 @@ import SwiftUI
 
 struct ChatMessageView: View {
     
-//    @Binding var record: CHRecord
-//    var messageText: String
-//    var sender: Int
     @State var record: CHRecord?
+    var onDelete: (CHRecord) -> Void
     @State var overRecordAnim = false
     @State var overRecord : Bool = false {
             didSet {
@@ -55,9 +53,10 @@ struct ChatMessageView: View {
 //            .frame(maxWidth: 900, alignment: .leading)
 
             
-            if overRecordAnim {
-                    ChatMessagePopView(item: record!)
-            }
+//            if overRecordAnim {
+            ChatMessagePopView(item: record!, isVisible: $overRecordAnim, onDelete: onDelete)
+//                .frame(maxWidth: 120, alignment: .leading)
+//            }
         }
         .listRowSeparator(.hidden)
             .onHover(perform: { hovering in
@@ -71,18 +70,24 @@ struct ChatMessageView: View {
 
 struct ChatMessagePopView: View {
     var item: CHRecord
+    @Binding var isVisible: Bool
+    var onDelete: (CHRecord) -> Void
     
     var body: some View {
         HStack {
-            HStack {
-                Image(systemName: "seal.fill")
-                Text("\(item.sender)")
-//                    .fontWeight(.heavy)
+            if isVisible {
+                HStack {
+                    Image(systemName: "seal.fill")
+                    
+                    Text("\(item.sender)")
+                }
+                .foregroundColor(.yellow)
+                Text("\(item.id)")
+                Image(systemName: "xmark.bin").onTapGesture{
+                    onDelete(item)
+                }
             }
-//            .font(.largeTitle)
-            .foregroundColor(.yellow)
-            .padding()
-            Text("\(item.id)")
         }
+        .frame(maxWidth: 120, alignment: .leading)
     }
 }
