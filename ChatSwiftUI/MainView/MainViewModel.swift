@@ -146,26 +146,15 @@ class MainViewModel {
         
         Task {
             do {
-//                let chat = try await ai.getChat()
-//                for try await result in chat.chatsStream(query: query)
-                        
                 for try await result in try ai.reqV3(query: query) {
-
-                    if let choice = result.choices.first {
-                        if let content = choice.delta.content {
-                            answerText.append(content)
-                        } 
-//                        else {
-//                            answerText.append("NoN")
-//                        }
-                        if choice.finishReason != nil {
-                            try await Task.sleep(nanoseconds: 1_000_000_000)
-                            insertRecord(chatId: currentChatId, sender: 2, body: answerText)
-                            isLoading = false
-                        }
+                    switch result {
+                    case .processing(let data):
+                        answerText.append(data)
+                    case.finished(_):
+                        insertRecord(chatId: currentChatId, sender: 2, body: answerText)
+                        isLoading = false
                     }
                 }
-                
             } catch {
                 emitError(error.localizedDescription)
                 print("Request failed with error: \(error)")

@@ -70,29 +70,31 @@ class AIService {
     
     enum Status {
             case processing(String)
-            case finished(Data)
+            case finished(Int)
         }
     
     func reqV3(query: ChatQuery) throws -> AsyncThrowingStream<Status, any Error> {
-//        return try await getChat().chatsStream(query: query)
-        guard let openAI = openAI else { throw AIError.openAINotInitialized }
-        
         return AsyncThrowingStream { continuation in
-            do {
-                for try await result in openAI.chatsStream(query: query) {
-                    //                if let choice = result.choices.first {
-                    //                    if let content = choice.delta.content {
-                    //                        continuation.yield(with: result)
-                    //                    }
-                    //                    if choice.finishReason != nil {
-                    //                        try await Task.sleep(nanoseconds: 1_000_000_000)
-                    //
-                    //                    }
-                    //                }
-                    continuation.yield(.processing("sss"))
+            Task {
+                do {
+                    if openAI == nil { try await getChat() }
+                    
+                    guard let openAI = openAI else { throw AIError.openAINotInitialized }
+                    
+                    for try await result in openAI.chatsStream(query: query) {
+                        if let choice = result.choices.first {
+                            if let content = choice.delta.content {
+                                continuation.yield(.processing(content))
+                            }
+                            if choice.finishReason != nil {
+                                try await Task.sleep(nanoseconds: 1_000_000_000)
+                                continuation.yield(.finished(1))
+                            }
+                        }
+                    }
+                } catch {
+                    continuation.finish(throwing: error)
                 }
-            } catch {
-                continuation.finish(throwing: error)
             }
         }
     }
