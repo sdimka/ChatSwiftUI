@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -29,8 +29,10 @@
 		139EBA5C2B7CB59C00F31080 /* FMDB in Frameworks */ = {isa = PBXBuildFile; productRef = 139EBA5B2B7CB59C00F31080 /* FMDB */; };
 		139EBA5F2B7CB97100F31080 /* CHRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EBA5E2B7CB97100F31080 /* CHRecord.swift */; };
 		139EBA622B7CEB1400F31080 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EBA612B7CEB1400F31080 /* Color.swift */; };
-		139EBA652B7CFAA700F31080 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 139EBA642B7CFAA700F31080 /* OpenAI */; };
 		139EBA672B7D046800F31080 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 139EBA662B7D046800F31080 /* AIService.swift */; };
+		13AFA35F2BF783FB00E7A67C /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 13AFA35E2BF783FB00E7A67C /* OpenAI */; };
+		13AFA3612BF7851B00E7A67C /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 13AFA3602BF7851B00E7A67C /* OpenAI */; };
+		13AFA3632BF785A700E7A67C /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = 13AFA3622BF785A700E7A67C /* OpenAI */; };
 		13B108932B7B44B200FA34AA /* ChatSwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B108922B7B44B200FA34AA /* ChatSwiftUIApp.swift */; };
 		13B108952B7B44B200FA34AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B108942B7B44B200FA34AA /* ContentView.swift */; };
 		13B108972B7B44B400FA34AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B108962B7B44B400FA34AA /* Assets.xcassets */; };
@@ -74,8 +76,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				13AFA3632BF785A700E7A67C /* OpenAI in Frameworks */,
 				133DADF42B87568000A38ABE /* Resolver in Frameworks */,
-				139EBA652B7CFAA700F31080 /* OpenAI in Frameworks */,
+				13AFA35F2BF783FB00E7A67C /* OpenAI in Frameworks */,
+				13AFA3612BF7851B00E7A67C /* OpenAI in Frameworks */,
 				139EBA5C2B7CB59C00F31080 /* FMDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,8 +211,10 @@
 			name = ChatSwiftUI;
 			packageProductDependencies = (
 				139EBA5B2B7CB59C00F31080 /* FMDB */,
-				139EBA642B7CFAA700F31080 /* OpenAI */,
 				133DADF32B87568000A38ABE /* Resolver */,
+				13AFA35E2BF783FB00E7A67C /* OpenAI */,
+				13AFA3602BF7851B00E7A67C /* OpenAI */,
+				13AFA3622BF785A700E7A67C /* OpenAI */,
 			);
 			productName = ChatSwiftUI;
 			productReference = 13B1088F2B7B44B200FA34AA /* ChatSwiftUI.app */;
@@ -240,8 +246,8 @@
 			mainGroup = 13B108862B7B44B200FA34AA;
 			packageReferences = (
 				139EBA5A2B7CB59C00F31080 /* XCRemoteSwiftPackageReference "fmdb" */,
-				139EBA632B7CFAA700F31080 /* XCRemoteSwiftPackageReference "OpenAI" */,
 				133DADF22B87568000A38ABE /* XCRemoteSwiftPackageReference "Resolver" */,
+				13AFA35D2BF783FB00E7A67C /* XCLocalSwiftPackageReference "../OpenAI" */,
 			);
 			productRefGroup = 13B108902B7B44B200FA34AA /* Products */;
 			projectDirPath = "";
@@ -500,6 +506,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		13AFA35D2BF783FB00E7A67C /* XCLocalSwiftPackageReference "../OpenAI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../OpenAI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		133DADF22B87568000A38ABE /* XCRemoteSwiftPackageReference "Resolver" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -517,14 +530,6 @@
 				minimumVersion = 2.7.9;
 			};
 		};
-		139EBA632B7CFAA700F31080 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.6;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -538,9 +543,16 @@
 			package = 139EBA5A2B7CB59C00F31080 /* XCRemoteSwiftPackageReference "fmdb" */;
 			productName = FMDB;
 		};
-		139EBA642B7CFAA700F31080 /* OpenAI */ = {
+		13AFA35E2BF783FB00E7A67C /* OpenAI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 139EBA632B7CFAA700F31080 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+		13AFA3602BF7851B00E7A67C /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OpenAI;
+		};
+		13AFA3622BF785A700E7A67C /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = OpenAI;
 		};
 /* End XCSwiftPackageProductDependency section */

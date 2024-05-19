@@ -14,13 +14,15 @@ struct CHRecord: Hashable, Decodable, Identifiable {
     var chatId: Int
     let sender: Int
     var body: String
+    var usage: ChatUsage?
     
     
-    init(id: Int, chatId: Int, sender: Int, body: String) {
+    init(id: Int, chatId: Int, sender: Int, body: String, usage: ChatUsage? = nil) {
         self.id = id
         self.chatId = chatId
         self.sender = sender
         self.body = body
+        self.usage = usage
     }
     
     init?(from result: FMResultSet) {
@@ -29,6 +31,12 @@ struct CHRecord: Hashable, Decodable, Identifiable {
             self.chatId = Int(result.int(forColumn: "chat_id"))
             self.sender = Int(result.int(forColumn: "sender"))
             self.body = body
+            let cu = ChatUsage(
+                completionTokens: Int(result.int(forColumn: "completion_tokens")),
+                promptTokens: Int(result.int(forColumn: "prompt_tokens")),
+                totalTokens: Int(result.int(forColumn: "total_tokens"))
+            )
+            self.usage = cu
         } else {
             return nil
         }

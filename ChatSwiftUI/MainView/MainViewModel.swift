@@ -11,7 +11,6 @@ import SwiftUI
 import Resolver
 
 
-//@MainActor
 @Observable 
 class MainViewModel {
     
@@ -54,6 +53,7 @@ class MainViewModel {
     
     var editText = ""
     var answerText = ""
+    var uData: ChatUsage? = nil
     
     func loadHistory() {
         isLoading = true
@@ -83,18 +83,15 @@ class MainViewModel {
     }
             
     
-    func insertRecord(chatId: Int, sender: Int, body: String) {
-//        isLoading = true
-        let rec = CHRecord(id: 10, chatId: chatId, sender: sender, body: body)
+    func insertRecord(chatId: Int, sender: Int, body: String, usageData: ChatUsage? = nil) {
+
+        let rec = CHRecord(id: 10, chatId: chatId, sender: sender, body: body, usage: usageData)
         chRecords.append(rec)
         Task {
             do {
                 let _ = try await db.insertAsync(rec)
-//                isLoading = false
             } catch {
-//                print("DB failed with error: \(error)")
                 self.emitError(error.localizedDescription)
-//                isLoading = false
             }
         }
     }
@@ -154,20 +151,25 @@ class MainViewModel {
         let reqString = editText
         editText = ""
         answerText = ""
-        
+        uData = nil
 //        let chat = ChatCompletionMessageParam(role: .user, content: reqString)
         let chatMessage1 = ChatQuery.ChatCompletionMessageParam(role: .user, content: reqString)!
 //        let chatMessage2 = ChatQuery.ChatCompletionMessageParam(role: .system, content: "You are senior developer, all code writen in swift")!
-        let query = ChatQuery(messages: [chatMessage1], model: .gpt3_5Turbo)
-        
+
+        let query = ChatQuery(messages: [chatMessage1], 
+                              model: .gpt4_o,
+                              streamOptions: ChatQuery.StreamOptions(includeUsage: true))
+
         Task {
             do {
                 for try await result in try ai.reqV3(query: query) {
                     switch result {
                     case .processing(let data):
                         answerText.append(data)
+                    case .usageData(let usageData):
+                        uData = ChatUsage(from: usageData)
                     case.finished(_):
-                        insertRecord(chatId: currentChatId, sender: 2, body: answerText)
+                        insertRecord(chatId: currentChatId, sender: 2, body: answerText, usageData: uData)
                         isLoading = false
                     }
                 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import FMDB
+import OpenAI
 
 struct Chat: Hashable, Decodable, Identifiable {
     
@@ -29,5 +30,19 @@ struct Chat: Hashable, Decodable, Identifiable {
         } else {
             return nil
         }
+    }
+}
+
+struct ChatUsage: Equatable, Hashable {
+    public let completionTokens: Int
+    public let promptTokens: Int
+    public let totalTokens: Int
+}
+
+extension ChatUsage {
+    init(from: ChatStreamResult.Usage) {
+        self.completionTokens = from.completionTokens
+        self.promptTokens = from.promptTokens
+        self.totalTokens = from.totalTokens
     }
 }

@@ -85,7 +85,7 @@ class DBService {
     func getAllRecords(chatId: Int, completion: @escaping (Result<[CHRecord], Error>) -> Void) {
         var records = [CHRecord]()
         let q = """
-            SELECT id, chat_id, sender, body
+            SELECT id, chat_id, sender, body, completion_tokens, prompt_tokens, total_tokens
             FROM ch_records_new
             WHERE chat_id = ?
         """
@@ -121,10 +121,15 @@ class DBService {
         do {
             try db.executeUpdate(
                 """
-                INSERT INTO ch_records_new (chat_id, sender, body)
-                values (?, ?, ?)
+                INSERT INTO ch_records_new (chat_id, sender, body, completion_tokens, prompt_tokens, total_tokens)
+                values (?, ?, ?, ?, ?, ?)
                 """,
-                values: [record.chatId, record.sender, record.body]
+                values: [record.chatId,
+                         record.sender,
+                         record.body,
+                         record.usage?.completionTokens ?? 0,
+                         record.usage?.promptTokens ?? 0,
+                         record.usage?.totalTokens ?? 0 ]
             )
             completion(.success("OK"))
         } catch {

@@ -26,6 +26,9 @@ struct QueryHolder {
                 chat_id INTEGER,
                 sender  INTEGER,
                 body    TEXT,
+                completion_tokens INTEGER,
+                prompt_tokens     INTEGER,
+                total_tokens      INTEGER,
                 FOREIGN KEY (chat_id) REFERENCES chats(id)
             );
         """

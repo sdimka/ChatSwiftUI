@@ -76,18 +76,27 @@ struct ChatMessagePopView: View {
     var body: some View {
         HStack {
             if isVisible {
-                HStack {
-                    Image(systemName: "seal.fill")
-                    
-                    Text("\(item.sender)")
+                VStack(alignment: .leading) {
+//                    Image(systemName: "seal.fill")
+//                    Text("\(item.sender)")
+                    Text(strFromInt("compl: ", item.usage?.completionTokens))
+                    Text(strFromInt("prompt: ", item.usage?.promptTokens))
+                    Text(strFromInt("total: ", item.usage?.totalTokens))
                 }
-                .foregroundColor(.yellow)
+                .foregroundColor(.blue)
                 Text("\(item.id)")
                 Image(systemName: "xmark.bin").onTapGesture{
                     onDelete(item)
                 }
             }
         }
-        .frame(maxWidth: 120, alignment: .leading)
+        .frame(maxWidth: 130, alignment: .leading)
+    }
+    
+    func strFromInt(_ pref: String, _ value: Int?) -> String {
+        guard let value = value, value != 0 else {
+            return ""
+        }
+        return pref + String(value)
     }
 }
