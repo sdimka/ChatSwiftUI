@@ -12,6 +12,9 @@ enum ParamType: Int {
     case undef = 0
     case aiKey = 1
     case aiModel = 2
+    case apiAdress = 3
+    case apiUser = 4
+    case apiPassword = 5
 }
 
 struct Param {

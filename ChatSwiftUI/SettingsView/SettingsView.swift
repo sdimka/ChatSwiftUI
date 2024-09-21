@@ -13,45 +13,71 @@ struct SettingsView: View {
     @State private var viewModel = SettingsViewModel()
     
     var body: some View {
-        VStack (alignment: .trailing){
+        VStack {
+            HStack {
+                leftColumnView
+                Spacer().frame(minWidth: 20, maxWidth: 25)
+                rightColumnView
+            }
+            
+            saveButton
+            
             Spacer()
-            HStack {
-                Text("API Key")
-                TextField(text: $viewModel.apiKey, 
-                          label: { Label("API Key", systemImage: "key.horizontal")})
-                .frame(width: 350)
-            }
-            
-            HStack {
-                Text("API Model")
-                TextField(text: $viewModel.apiModel, 
-                          label: { Label("API Model", systemImage: "figure.walk.diamond")})
-                .frame(width: 350)
-            }
-            
-            HStack {
-                Text("DP Path:")
-                Text(viewModel.dbPath).textSelection(.enabled)
-                .frame(width: 350)
-            }
-            
-            Button(action: {
-                viewModel.save()
-            }, label: {
-                Label("SAVE", systemImage: "square.and.arrow.down")
-            }).padding(.top)
-            
-        }.padding()
-            .task {
-                viewModel.update()
-            }
-        
-        Text("Settings View")
-            .font(.title)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.mint.opacity(0.5))
-            .navigationTitle("Settings")
+        }
+        .padding()
+        .task {
+            viewModel.update()
+        }
     }
+    
+    private var leftColumnView: some View {
+        VStack {
+            settingsRow(title: "AI API Key", binding: $viewModel.apiKey, icon: "key.horizontal")
+            settingsRow(title: "API Model", binding: $viewModel.apiModel, icon: "figure.walk.diamond")
+            dbPathRow
+        }
+    }
+    
+    private var rightColumnView: some View {
+        VStack(alignment: .trailing, spacing: 16) {
+            settingsRow(title: "API Address", binding: $viewModel.apiAdress, icon: "key.horizontal")
+            settingsRow(title: "API User", binding: $viewModel.apiUser, icon: "figure.walk.diamond")
+            HStack {
+                Text("API Pass")
+                SecureField("API Pass", text: $viewModel.apiPassword)
+                    .frame(width: 350)
+            }
+        }
+    }
+    
+    private var dbPathRow: some View {
+        HStack {
+            Text("DB Path:")
+            Text(viewModel.dbPath)
+                .textSelection(.enabled)
+                .frame(width: 350)
+        }
+    }
+    
+    private var saveButton: some View {
+        Button(action: {
+            viewModel.save()
+        }) {
+            Label("SAVE", systemImage: "square.and.arrow.down")
+        }
+        .padding(.top)
+    }
+    
+    private func settingsRow(title: String, binding: Binding<String>, icon: String) -> some View {
+        HStack {
+            Text(title)
+            TextField(text: binding) {
+                Label(title, systemImage: icon)
+            }
+            .frame(width: 350)
+        }
+    }
+    
 }
 
 //extension View {
