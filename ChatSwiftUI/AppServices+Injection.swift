@@ -12,19 +12,22 @@ extension Resolver {
     public static func registerAppServices() {
         register{ DBService() }.scope(.application)
         register{ AIService() }.scope(.application)
+        register{ AuthInterceptor() }.scope(.application)
+        register{ JobOfferService() }.scope(.application)
 //        register{ AsyncDataService() }.scope(.application)
         
     }
     
     public static func registerView() {
         register{ MainView() }.scope(.application)
-        register{ SecondColumnView() }.scope(.application)
+        register{ OffersView() }.scope(.application)
         register{ SettingsView() }.scope(.application)
         register{ TestView() }.scope(.application)
     }
     
     public static func registerViewModels() {
         register{ MainViewModel() }.scope(.application)
+        register{ OffersViewModel() }.scope(.application)
 //        register{ SecondColumnView() }.scope(.application)
 //        register{ SettingsView() }.scope(.application)
 //        register{ TestView() }.scope(.application)

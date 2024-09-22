@@ -20,6 +20,11 @@
 		133DADF42B87568000A38ABE /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 133DADF32B87568000A38ABE /* Resolver */; };
 		133DADFA2B8756BF00A38ABE /* AppDelegate+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133DADF92B8756BF00A38ABE /* AppDelegate+Injection.swift */; };
 		133DADFC2B87577900A38ABE /* AppServices+Injection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 133DADFB2B87577900A38ABE /* AppServices+Injection.swift */; };
+		137272232C9F1E1400BE750E /* JobOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137272222C9F1E1400BE750E /* JobOffer.swift */; };
+		137272272CA00D3C00BE750E /* OffersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137272262CA00D3C00BE750E /* OffersView.swift */; };
+		137272292CA00DFA00BE750E /* OffersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137272282CA00DFA00BE750E /* OffersViewModel.swift */; };
+		1372722B2CA00FE000BE750E /* JobOfferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372722A2CA00FE000BE750E /* JobOfferService.swift */; };
+		1372722D2CA0160B00BE750E /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372722C2CA0160B00BE750E /* AuthInterceptor.swift */; };
 		1386DFE32BEE158600C50956 /* QueryHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DFE22BEE158600C50956 /* QueryHolder.swift */; };
 		1386DFE52BEE196C00C50956 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DFE42BEE196C00C50956 /* Chat.swift */; };
 		1386DFE72BEF6CAC00C50956 /* ChatSelectorMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DFE62BEF6CAB00C50956 /* ChatSelectorMenu.swift */; };
@@ -53,6 +58,11 @@
 		133DADF02B8384EC00A38ABE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		133DADF92B8756BF00A38ABE /* AppDelegate+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Injection.swift"; sourceTree = "<group>"; };
 		133DADFB2B87577900A38ABE /* AppServices+Injection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppServices+Injection.swift"; sourceTree = "<group>"; };
+		137272222C9F1E1400BE750E /* JobOffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobOffer.swift; sourceTree = "<group>"; };
+		137272262CA00D3C00BE750E /* OffersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersView.swift; sourceTree = "<group>"; };
+		137272282CA00DFA00BE750E /* OffersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewModel.swift; sourceTree = "<group>"; };
+		1372722A2CA00FE000BE750E /* JobOfferService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobOfferService.swift; sourceTree = "<group>"; };
+		1372722C2CA0160B00BE750E /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		1386DFE22BEE158600C50956 /* QueryHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryHolder.swift; sourceTree = "<group>"; };
 		1386DFE42BEE196C00C50956 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		1386DFE62BEF6CAB00C50956 /* ChatSelectorMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectorMenu.swift; sourceTree = "<group>"; };
@@ -105,6 +115,23 @@
 			path = TestView;
 			sourceTree = "<group>";
 		};
+		137272242CA00D0D00BE750E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				137272252CA00D2000BE750E /* Offers */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		137272252CA00D2000BE750E /* Offers */ = {
+			isa = PBXGroup;
+			children = (
+				137272262CA00D3C00BE750E /* OffersView.swift */,
+				137272282CA00DFA00BE750E /* OffersViewModel.swift */,
+			);
+			path = Offers;
+			sourceTree = "<group>";
+		};
 		139EBA542B7CA81200F31080 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,10 +148,12 @@
 		139EBA572B7CB3A000F31080 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				1372722A2CA00FE000BE750E /* JobOfferService.swift */,
 				139EBA582B7CB3DB00F31080 /* DBService.swift */,
 				139EBA662B7D046800F31080 /* AIService.swift */,
 				133DADDF2B7F53E300A38ABE /* AsyncDataService.swift */,
 				1386DFE22BEE158600C50956 /* QueryHolder.swift */,
+				1372722C2CA0160B00BE750E /* AuthInterceptor.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -132,6 +161,7 @@
 		139EBA5D2B7CB95C00F31080 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				137272222C9F1E1400BE750E /* JobOffer.swift */,
 				139EBA5E2B7CB97100F31080 /* CHRecord.swift */,
 				133DADEC2B80B2E400A38ABE /* Params.swift */,
 				1386DFE42BEE196C00C50956 /* Chat.swift */,
@@ -166,6 +196,7 @@
 		13B108912B7B44B200FA34AA /* ChatSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				137272242CA00D0D00BE750E /* UI */,
 				133DADE12B7F583700A38ABE /* TestView */,
 				133DADDC2B7F4B3200A38ABE /* SettingsView */,
 				139EBA602B7CEAF900F31080 /* Resources */,
@@ -276,17 +307,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				133DADEB2B7FA98D00A38ABE /* ChatMessageView.swift in Sources */,
+				137272292CA00DFA00BE750E /* OffersViewModel.swift in Sources */,
 				13B108952B7B44B200FA34AA /* ContentView.swift in Sources */,
 				133DADE72B7F9DFA00A38ABE /* MainView.swift in Sources */,
 				139EBA592B7CB3DB00F31080 /* DBService.swift in Sources */,
 				133DADE32B7F584900A38ABE /* TestView.swift in Sources */,
 				139EBA622B7CEB1400F31080 /* Color.swift in Sources */,
 				133DADDE2B7F4B5C00A38ABE /* SettingsView.swift in Sources */,
+				137272272CA00D3C00BE750E /* OffersView.swift in Sources */,
+				1372722D2CA0160B00BE750E /* AuthInterceptor.swift in Sources */,
 				133DADE02B7F53E300A38ABE /* AsyncDataService.swift in Sources */,
+				1372722B2CA00FE000BE750E /* JobOfferService.swift in Sources */,
 				133DADEF2B80D64200A38ABE /* SettingsViewModel.swift in Sources */,
 				133DADFC2B87577900A38ABE /* AppServices+Injection.swift in Sources */,
 				133DADE52B7F58BE00A38ABE /* TestViewModel.swift in Sources */,
 				139EBA5F2B7CB97100F31080 /* CHRecord.swift in Sources */,
+				137272232C9F1E1400BE750E /* JobOffer.swift in Sources */,
 				13B108932B7B44B200FA34AA /* ChatSwiftUIApp.swift in Sources */,
 				1386DFE32BEE158600C50956 /* QueryHolder.swift in Sources */,
 				133DADFA2B8756BF00A38ABE /* AppDelegate+Injection.swift in Sources */,

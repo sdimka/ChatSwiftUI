@@ -29,7 +29,7 @@ class SettingsViewModel {
     }
     
     func update() {
-        db.getParams { [weak self] result in
+        db.getAllParams { [weak self] result in
             switch result {
             case .success(let fetchedParams):
                 self?.handleFetchedParams(fetchedParams)

@@ -28,8 +28,8 @@ struct ContentView: View {
     @State var currentOption: Item? = .first
     
     let options: [Option] = [
-        .init(title: "Home", imageName: "house", item: .first),
-        .init(title: "About", imageName: "info.circle", item: .second),
+        .init(title: "AI Chat", imageName: "ellipsis.message", item: .first),
+        .init(title: "Offers", imageName: "fireworks", item: .second),
         .init(title: "Settings", imageName: "gear", item: .third),
         .init(title: "Tests", imageName: "bolt.shield", item: .fourth),
     ]
@@ -48,7 +48,7 @@ struct ContentView: View {
                 case .first:
                     Resolver.main.resolve(MainView.self)
                 case .second:
-                    Resolver.main.resolve(SecondColumnView.self)
+                    Resolver.main.resolve(OffersView.self)
                 case .third:
                     Resolver.main.resolve(SettingsView.self)
                 case .fourth:
@@ -58,22 +58,6 @@ struct ContentView: View {
 
         }
         .frame(minWidth: 600, minHeight: 700)
-    }
-}
-
-struct SecondColumnView: View {
-    var body: some View {
-        VStack {
-            Text("Second Column View")
-                .font(.title)
-
-            NavigationLink("Open Next View") {
-                SettingsView()
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.yellow.opacity(0.3))
-        .navigationTitle("Second Navigation Title")
     }
 }
 

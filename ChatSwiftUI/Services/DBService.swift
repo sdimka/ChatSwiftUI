@@ -185,7 +185,7 @@ class DBService {
         return result
     }
     
-    func getParams(completion: @escaping (Result<[Param], Error>) -> Void) {
+    func getAllParams(completion: @escaping (Result<[Param], Error>) -> Void) {
         var records = [Param]()
         do {
             let result = try db.executeQuery("SELECT id, type_int, value FROM params", values: nil)
@@ -217,22 +217,46 @@ class DBService {
             return
         }
     }
-    
-    func getAiToken() async throws ->  String {
+
+    func getParam(by type: ParamType) async throws -> Param {
         return try await withCheckedThrowingContinuation { continuation in
-            getParams { result in
-                switch result {
-                case .success(let params):
-                    if let key = params.first(where: { $0.type == .aiKey }) {
-                        continuation.resume(returning: key.value)
-                    } else {
-                        continuation.resume(throwing: DBErrors.notFound)
-                    }
-                case .failure(let error):
-                    continuation.resume(throwing: error)
+            let query = "SELECT id, type_int, value FROM params WHERE type_int = ?"
+            do {
+                let result = try db.executeQuery(query, values: [type.rawValue])
+                if result.next(), let param = Param(from: result) {
+                    continuation.resume(returning: param)
+                } else {
+                    continuation.resume(throwing: DBErrors.notFound)
                 }
+            } catch {
+                continuation.resume(throwing: error)
             }
         }
+    }
+    
+    func getAiToken() async throws ->  String {
+        do {
+            let param = try await getParam(by: .aiKey)
+            return param.value
+        } catch DBErrors.notFound {
+            throw DBErrors.notFound
+        } catch {
+            throw error
+        }
+//        return try await withCheckedThrowingContinuation { continuation in
+//            getAllParams { result in
+//                switch result {
+//                case .success(let params):
+//                    if let key = params.first(where: { $0.type == .aiKey }) {
+//                        continuation.resume(returning: key.value)
+//                    } else {
+//                        continuation.resume(throwing: DBErrors.notFound)
+//                    }
+//                case .failure(let error):
+//                    continuation.resume(throwing: error)
+//                }
+//            }
+//        }
     }
     
 }
