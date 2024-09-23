@@ -19,15 +19,19 @@ class OffersViewModel {
     @Injected private var service: JobOfferService
     
     var offers: [JobOffer] = []
+    var loaded: Bool = false
     
     func update() {
+        loaded = true
         Task {
             do {
                 try await offers = service.getJobOffers()
+                try await Task.sleep(nanoseconds: 5_000_000_00)
                 
             } catch {
                 print(error)
             }
+            loaded = false
         }
     }
     

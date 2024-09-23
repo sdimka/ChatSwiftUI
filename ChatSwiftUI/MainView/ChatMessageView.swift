@@ -35,9 +35,7 @@ struct ChatMessageView: View {
                     .frame(width: 35)
                     .foregroundColor(record!.sender == 1 ? .chIcon1 : .chIcon2)
                 Text(record!.body)
-                    .font(.custom(
-                        "SFMono-Regular",
-                        fixedSize: 14))
+                    .font(.custom("SFMono-Regular", fixedSize: 14))
                     .textSelection(.enabled)
                     .frame(maxWidth: 900, alignment: .leading)
                     .padding()

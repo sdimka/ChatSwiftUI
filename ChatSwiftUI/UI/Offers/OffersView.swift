@@ -16,21 +16,36 @@ struct OffersView: View {
     
     var body: some View {
         VStack {
-            Text("Second Column View")
-                .font(.title)
-
-            Button(action: {
-                viewModel.update()
-            }, label: {
-                Image(systemName: "network")
-            })
-            Divider()
+            
+            Spacer()
+            
+            HStack(alignment: .center) {
+                
+                Spacer()
+                
+                Button {
+                    viewModel.update()
+                } label: {
+                    Image(systemName: "arrow.clockwise.square")
+                        .resizable(resizingMode: .stretch)
+                        .frame(width: 20, height: 20)
+                        .padding([.top, .bottom], 5)
+                }.padding(.trailing, 20)
+            }
+            
+            
             List(viewModel.offers, id: \.self) { record in
-                Text(record.title)
+                OfferView(jobOffer: record)
             }.listSectionSeparator(.hidden)
         }
+        .overlay(alignment: .center){
+            if (viewModel.loaded) {
+                LottieView(lottieFile: "loaded-j", loopMode: .loop)
+                    .frame(width: 100, height: 100, alignment: .center)
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.yellow.opacity(0.3))
+        .background(Color.blue.opacity(0.3))
         .navigationTitle("Second Navigation Title")
     }
 }

@@ -25,6 +25,11 @@
 		137272292CA00DFA00BE750E /* OffersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137272282CA00DFA00BE750E /* OffersViewModel.swift */; };
 		1372722B2CA00FE000BE750E /* JobOfferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372722A2CA00FE000BE750E /* JobOfferService.swift */; };
 		1372722D2CA0160B00BE750E /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1372722C2CA0160B00BE750E /* AuthInterceptor.swift */; };
+		137272302CA066A800BE750E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 1372722F2CA066A800BE750E /* Lottie */; };
+		137272322CA066C400BE750E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137272312CA066C400BE750E /* LottieView.swift */; };
+		137272342CA067EC00BE750E /* loaded.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 137272332CA067EC00BE750E /* loaded.lottie */; };
+		137272362CA06A5400BE750E /* loaded-j.json in Resources */ = {isa = PBXBuildFile; fileRef = 137272352CA06A5400BE750E /* loaded-j.json */; };
+		137272382CA1A86B00BE750E /* OfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137272372CA1A86B00BE750E /* OfferView.swift */; };
 		1386DFE32BEE158600C50956 /* QueryHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DFE22BEE158600C50956 /* QueryHolder.swift */; };
 		1386DFE52BEE196C00C50956 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DFE42BEE196C00C50956 /* Chat.swift */; };
 		1386DFE72BEF6CAC00C50956 /* ChatSelectorMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1386DFE62BEF6CAB00C50956 /* ChatSelectorMenu.swift */; };
@@ -63,6 +68,10 @@
 		137272282CA00DFA00BE750E /* OffersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewModel.swift; sourceTree = "<group>"; };
 		1372722A2CA00FE000BE750E /* JobOfferService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JobOfferService.swift; sourceTree = "<group>"; };
 		1372722C2CA0160B00BE750E /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		137272312CA066C400BE750E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		137272332CA067EC00BE750E /* loaded.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = loaded.lottie; sourceTree = "<group>"; };
+		137272352CA06A5400BE750E /* loaded-j.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "loaded-j.json"; sourceTree = "<group>"; };
+		137272372CA1A86B00BE750E /* OfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferView.swift; sourceTree = "<group>"; };
 		1386DFE22BEE158600C50956 /* QueryHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryHolder.swift; sourceTree = "<group>"; };
 		1386DFE42BEE196C00C50956 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		1386DFE62BEF6CAB00C50956 /* ChatSelectorMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectorMenu.swift; sourceTree = "<group>"; };
@@ -91,6 +100,7 @@
 				13AFA35F2BF783FB00E7A67C /* OpenAI in Frameworks */,
 				13AFA3612BF7851B00E7A67C /* OpenAI in Frameworks */,
 				139EBA5C2B7CB59C00F31080 /* FMDB in Frameworks */,
+				137272302CA066A800BE750E /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +138,8 @@
 			children = (
 				137272262CA00D3C00BE750E /* OffersView.swift */,
 				137272282CA00DFA00BE750E /* OffersViewModel.swift */,
+				137272312CA066C400BE750E /* LottieView.swift */,
+				137272372CA1A86B00BE750E /* OfferView.swift */,
 			);
 			path = Offers;
 			sourceTree = "<group>";
@@ -172,6 +184,8 @@
 		139EBA602B7CEAF900F31080 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				137272352CA06A5400BE750E /* loaded-j.json */,
+				137272332CA067EC00BE750E /* loaded.lottie */,
 				139EBA612B7CEB1400F31080 /* Color.swift */,
 			);
 			path = Resources;
@@ -246,6 +260,7 @@
 				13AFA35E2BF783FB00E7A67C /* OpenAI */,
 				13AFA3602BF7851B00E7A67C /* OpenAI */,
 				13AFA3622BF785A700E7A67C /* OpenAI */,
+				1372722F2CA066A800BE750E /* Lottie */,
 			);
 			productName = ChatSwiftUI;
 			productReference = 13B1088F2B7B44B200FA34AA /* ChatSwiftUI.app */;
@@ -279,6 +294,7 @@
 				139EBA5A2B7CB59C00F31080 /* XCRemoteSwiftPackageReference "fmdb" */,
 				133DADF22B87568000A38ABE /* XCRemoteSwiftPackageReference "Resolver" */,
 				13AFA35D2BF783FB00E7A67C /* XCLocalSwiftPackageReference "../OpenAI" */,
+				1372722E2CA066A800BE750E /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 13B108902B7B44B200FA34AA /* Products */;
 			projectDirPath = "";
@@ -294,6 +310,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				137272342CA067EC00BE750E /* loaded.lottie in Resources */,
+				137272362CA06A5400BE750E /* loaded-j.json in Resources */,
 				13B1089A2B7B44B400FA34AA /* Preview Assets.xcassets in Resources */,
 				13B108972B7B44B400FA34AA /* Assets.xcassets in Resources */,
 			);
@@ -323,12 +341,14 @@
 				133DADE52B7F58BE00A38ABE /* TestViewModel.swift in Sources */,
 				139EBA5F2B7CB97100F31080 /* CHRecord.swift in Sources */,
 				137272232C9F1E1400BE750E /* JobOffer.swift in Sources */,
+				137272322CA066C400BE750E /* LottieView.swift in Sources */,
 				13B108932B7B44B200FA34AA /* ChatSwiftUIApp.swift in Sources */,
 				1386DFE32BEE158600C50956 /* QueryHolder.swift in Sources */,
 				133DADFA2B8756BF00A38ABE /* AppDelegate+Injection.swift in Sources */,
 				133DADF12B8384EC00A38ABE /* AppDelegate.swift in Sources */,
 				133DADED2B80B2E400A38ABE /* Params.swift in Sources */,
 				1386DFE52BEE196C00C50956 /* Chat.swift in Sources */,
+				137272382CA1A86B00BE750E /* OfferView.swift in Sources */,
 				139EBA672B7D046800F31080 /* AIService.swift in Sources */,
 				727EB89C2BEE4BAF0032C067 /* ChatSelectorView.swift in Sources */,
 				133DADE92B7FA55400A38ABE /* AdvancedList.swift in Sources */,
@@ -558,6 +578,14 @@
 				minimumVersion = 1.5.0;
 			};
 		};
+		1372722E2CA066A800BE750E /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		139EBA5A2B7CB59C00F31080 /* XCRemoteSwiftPackageReference "fmdb" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ccgus/fmdb";
@@ -573,6 +601,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 133DADF22B87568000A38ABE /* XCRemoteSwiftPackageReference "Resolver" */;
 			productName = Resolver;
+		};
+		1372722F2CA066A800BE750E /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1372722E2CA066A800BE750E /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		139EBA5B2B7CB59C00F31080 /* FMDB */ = {
 			isa = XCSwiftPackageProductDependency;
