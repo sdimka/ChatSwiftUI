@@ -21,11 +21,21 @@ class OffersViewModel {
     var offers: [JobOffer] = []
     var loaded: Bool = false
     
+    var selectedFilter: FilterMode = .new {
+        willSet(newVal) {
+            onFilterSelect(filterType: newVal)
+        }
+    }
+    
+    init(){
+        update()
+    }
+    
     func update() {
         loaded = true
         Task {
             do {
-                try await offers = service.getJobOffers()
+                try await offers = service.getJobOffers(filter: selectedFilter.fValue)
                 try await Task.sleep(nanoseconds: 5_000_000_00)
                 
             } catch {
@@ -33,6 +43,10 @@ class OffersViewModel {
             }
             loaded = false
         }
+    }
+    
+    private func onFilterSelect(filterType: FilterMode) {
+        update()
     }
     
 }

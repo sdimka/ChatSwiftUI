@@ -12,9 +12,11 @@ class JobOfferService {
     @Injected private var db: DBService
     @Injected private var authInterceptor: AuthInterceptor
     
-    func getJobOffers() async throws -> [JobOffer] {
+    func getJobOffers(filter: Int) async throws -> [JobOffer] {
         let baseURL = try await getBaseURL()
-        guard let url = URL(string: "\(baseURL)/jobs/") else {
+        let filterString = filter != 99 ? "?status=\(filter)" : ""
+        
+        guard let url = URL(string: "\(baseURL)/jobs/\(filterString)") else {
             throw JobOfferError.invalidURL
         }
 

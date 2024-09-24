@@ -21,6 +21,8 @@ struct OffersView: View {
             
             HStack(alignment: .center) {
                 
+                SelectorView(selectedFilter: $viewModel.selectedFilter)
+                
                 Spacer()
                 
                 Button {

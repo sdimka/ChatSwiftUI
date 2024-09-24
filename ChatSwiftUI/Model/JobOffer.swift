@@ -11,7 +11,7 @@ struct JobOffer: Hashable, Identifiable, Codable {
     let description: String
     let stars: Int
     let country: String
-    let status: String?
+    let status: Int
     
     enum CodingKeys: String, CodingKey {
         case url, id, payment, spendings, tags, title, description, stars, country, status
@@ -30,7 +30,7 @@ struct JobOffer: Hashable, Identifiable, Codable {
         description = try container.decode(String.self, forKey: .description)
         stars = try container.decode(Int.self, forKey: .stars)
         country = try container.decode(String.self, forKey: .country)
-        status = try container.decodeIfPresent(String.self, forKey: .status)
+        status = try container.decode(Int.self, forKey: .status)
         
         let dateString = try container.decode(String.self, forKey: .addDate)
         let dateFormatter = DateFormatter()

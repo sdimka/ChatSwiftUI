@@ -51,24 +51,31 @@ struct OfferView: View {
                     }.padding(.trailing, 20)
                 }
                 
-                Text(jobOffer!.description)
+                ExpandableText(jobOffer!.description, lineLimit: 3)
                     .font(.custom("SFMono-Regular", fixedSize: 14))
-                    .lineLimit(3, reservesSpace: true)
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 15)
                 
                 HStack {
+                    
+                    Image(systemName: "dollarsign.square")
+                        .foregroundStyle(.gray)
+                        .padding(.leading, 10)
                     Text(paymentType(jobOffer!.payment))
                         .font(.custom("SFMono-Regular", fixedSize: 9))
                         .foregroundStyle(.gray)
-                        .padding(.leading, 10)
+                    
                     Text(jobOffer!.spendings)
                         .font(.custom("SFMono-Regular", fixedSize: 9))
+                        .foregroundStyle(.gray)
+                        .padding(.leading, 10)
+                    
+                    Image(systemName: "mappin.square")
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
                     Text(jobOffer!.country)
                         .font(.custom("SFMono-Regular", fixedSize: 9))
                         .foregroundStyle(.gray)
-                        .padding(.leading, 10)
+
                     
                     Spacer()
                     

@@ -72,7 +72,7 @@ class MainViewModel {
         isLoading = false
     }
     
-    func loadChatData(chatId: Int) {
+    private func loadChatData(chatId: Int) {
         Task {
             do {
                 try await chRecords = db.getAllRecordsAsync(chatId: chatId)
