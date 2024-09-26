@@ -22,6 +22,7 @@ struct OffersView: View {
             HStack(alignment: .center) {
                 
                 SelectorView(selectedFilter: $viewModel.selectedFilter)
+                    .frame(width: 600)
                 
                 Spacer()
                 
@@ -37,7 +38,7 @@ struct OffersView: View {
             
             
             List(viewModel.offers, id: \.self) { record in
-                OfferView(jobOffer: record)
+                OfferView(jobOffer: record, setStatus: viewModel.setOfferStatus)
             }.listSectionSeparator(.hidden)
         }
         .overlay(alignment: .center){

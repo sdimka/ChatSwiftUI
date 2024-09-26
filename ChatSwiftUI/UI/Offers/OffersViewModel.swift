@@ -49,4 +49,21 @@ class OffersViewModel {
         update()
     }
     
+    func updateOffer(offer: JobOffer) {
+        Task {
+            do {
+                try await service.updateJobOffer(jobOffer: offer)
+                update()
+            } catch {
+                loaded = false
+                print(error)
+            }
+        }
+    }
+
+    func setOfferStatus(offer: JobOffer, status: Int) {
+        loaded = true
+        let newOffer = offer.copy(status: status)
+        updateOffer(offer: newOffer)
+    }
 }

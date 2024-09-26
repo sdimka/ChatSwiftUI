@@ -10,6 +10,7 @@ import SwiftUI
 struct OfferView: View {
     
     @State var jobOffer: JobOffer?
+    var setStatus: (JobOffer, Int) -> Void
     
     var body: some View {
         ZStack {
@@ -54,17 +55,18 @@ struct OfferView: View {
                 ExpandableText(jobOffer!.description, lineLimit: 3)
                     .font(.custom("SFMono-Regular", fixedSize: 14))
                     .padding(.horizontal, 15)
+                    .textSelection(.enabled)
                 
                 HStack {
                     
                     Image(systemName: "dollarsign.square")
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
-                    Text(paymentType(jobOffer!.payment))
+                    Text(paymentType(jobOffer!.client.paymentVerificationStatus))
                         .font(.custom("SFMono-Regular", fixedSize: 9))
                         .foregroundStyle(.gray)
                     
-                    Text(jobOffer!.spendings)
+                    Text(String(format: "%.2f", jobOffer!.client.totalSpent))
                         .font(.custom("SFMono-Regular", fixedSize: 9))
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
@@ -72,7 +74,7 @@ struct OfferView: View {
                     Image(systemName: "mappin.square")
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
-                    Text(jobOffer!.country)
+                    Text(jobOffer!.client.country)
                         .font(.custom("SFMono-Regular", fixedSize: 9))
                         .foregroundStyle(.gray)
 
@@ -80,9 +82,7 @@ struct OfferView: View {
                     Spacer()
                     
                     Button {
-                        let pasteboard = NSPasteboard.general
-                        pasteboard.clearContents()
-                        pasteboard.setString(jobOffer!.url, forType: .string)
+                        setStatus(jobOffer!, FilterMode.liked.fValue)
                     } label: {
                         Image(systemName: "hand.thumbsup")
                             .resizable(resizingMode: .stretch)
@@ -92,7 +92,7 @@ struct OfferView: View {
                     }
                     
                     Button {
-                        
+                        setStatus(jobOffer!, FilterMode.disliked.fValue)
                     } label: {
                         Image(systemName: "hand.thumbsdown")
                             .resizable(resizingMode: .stretch)
@@ -110,9 +110,9 @@ struct OfferView: View {
         .listRowSeparator(.hidden)
     }
                          
-    func paymentType(_ strData: String) -> String {
-        if strData == "0" { return "not verified" }
-        return "verified"
+    func paymentType(_ strData: Bool) -> String {
+        if strData { return "verified" }
+        return "not verified"
     }
     
 }
