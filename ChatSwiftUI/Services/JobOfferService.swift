@@ -50,8 +50,13 @@ class JobOfferService {
         request.httpBody = try JSONEncoder().encode(jobOffer)
 
         do {
-            let (_, response) = try await URLSession.shared.data(for: request)
+            let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
+                let r = response as? HTTPURLResponse
+                print("HTTP Response Status Code: \(String(describing: r?.statusCode))")
+                if let responseData = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                    print("Response Body: \(responseData)")
+                }
                 throw JobOfferError.invalidResponse
             }
         } catch {

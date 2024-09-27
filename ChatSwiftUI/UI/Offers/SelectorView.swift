@@ -139,8 +139,8 @@ struct BouncyButton: ButtonStyle {
 
 
 
-//struct Animations_Previews: PreviewProvider {
+//struct SelectorView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        AnimationsView()
+//        SelectorView()
 //    }
 //}

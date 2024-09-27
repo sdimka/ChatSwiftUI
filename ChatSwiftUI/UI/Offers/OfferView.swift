@@ -12,6 +12,14 @@ struct OfferView: View {
     @State var jobOffer: JobOffer?
     var setStatus: (JobOffer, Int) -> Void
     
+    var paymentVerificationColor: Color {
+        jobOffer?.client.paymentVerificationStatus == true ? .green : .gray
+    }
+    
+    var paymentVerificationText: String {
+        jobOffer?.client.paymentVerificationStatus == true ? "verified" : "not verified"
+    }
+    
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
@@ -20,9 +28,10 @@ struct OfferView: View {
                 
             VStack(alignment:.leading) {
                 Text((jobOffer?.addDate.ISO8601Format())!)
-                    .font(.custom("SFMono-Regular", fixedSize: 9))
+                    .font(.custom("SFMono-Regular", fixedSize: 10))
                     .foregroundStyle(.gray)
-                    .padding([.leading, .top], 10)
+                    .padding(.top, 10)
+                    .padding(.leading, 25)
                 HStack {
                     Text(jobOffer!.title)
                         .font(.custom("SFMono-Bold", fixedSize: 16))
@@ -60,14 +69,14 @@ struct OfferView: View {
                 HStack {
                     
                     Image(systemName: "dollarsign.square")
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(paymentVerificationColor)
                         .padding(.leading, 10)
-                    Text(paymentType(jobOffer!.client.paymentVerificationStatus))
-                        .font(.custom("SFMono-Regular", fixedSize: 9))
+                    Text(paymentVerificationText)
+                        .font(.custom("SFMono-Regular", fixedSize: 10))
                         .foregroundStyle(.gray)
                     
                     Text(String(format: "%.2f", jobOffer!.client.totalSpent))
-                        .font(.custom("SFMono-Regular", fixedSize: 9))
+                        .font(.custom("SFMono-Regular", fixedSize: 10))
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
                     
@@ -75,9 +84,11 @@ struct OfferView: View {
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
                     Text(jobOffer!.client.country)
-                        .font(.custom("SFMono-Regular", fixedSize: 9))
+                        .font(.custom("SFMono-Regular", fixedSize: 10))
                         .foregroundStyle(.gray)
 
+                    RatingView(value: jobOffer?.client.totalFeedback ?? 0)
+                        .padding(15)
                     
                     Spacer()
                     
@@ -86,7 +97,7 @@ struct OfferView: View {
                     } label: {
                         Image(systemName: "hand.thumbsup")
                             .resizable(resizingMode: .stretch)
-                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                            .foregroundColor(.blue)
                             .frame(width: 20, height: 20)
                             .padding([.top, .bottom], 5)
                     }

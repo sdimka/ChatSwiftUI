@@ -49,6 +49,7 @@
 		13B108972B7B44B400FA34AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B108962B7B44B400FA34AA /* Assets.xcassets */; };
 		13B1089A2B7B44B400FA34AA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B108992B7B44B400FA34AA /* Preview Assets.xcassets */; };
 		13E47ADD2CA580BF00387ACF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 13E47ADC2CA580BF00387ACF /* Lottie */; };
+		13E47ADF2CA6B26D00387ACF /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E47ADE2CA6B26D00387ACF /* RatingView.swift */; };
 		727EB89C2BEE4BAF0032C067 /* ChatSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +92,7 @@
 		13B108962B7B44B400FA34AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13B108992B7B44B400FA34AA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		13B1089B2B7B44B400FA34AA /* ChatSwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatSwiftUI.entitlements; sourceTree = "<group>"; };
+		13E47ADE2CA6B26D00387ACF /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +148,7 @@
 				137272372CA1A86B00BE750E /* OfferView.swift */,
 				137272392CA2A78200BE750E /* ExpandableText.swift */,
 				1372723B2CA2B3E800BE750E /* SelectorView.swift */,
+				13E47ADE2CA6B26D00387ACF /* RatingView.swift */,
 			);
 			path = Offers;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				1372723A2CA2A78200BE750E /* ExpandableText.swift in Sources */,
 				137272272CA00D3C00BE750E /* OffersView.swift in Sources */,
 				1372722D2CA0160B00BE750E /* AuthInterceptor.swift in Sources */,
+				13E47ADF2CA6B26D00387ACF /* RatingView.swift in Sources */,
 				133DADE02B7F53E300A38ABE /* AsyncDataService.swift in Sources */,
 				1372722B2CA00FE000BE750E /* JobOfferService.swift in Sources */,
 				133DADEF2B80D64200A38ABE /* SettingsViewModel.swift in Sources */,
