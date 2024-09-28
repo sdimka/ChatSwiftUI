@@ -80,8 +80,7 @@ struct OfferView: View {
                         .foregroundStyle(.gray)
                         .padding(.leading, 10)
                     
-                    Image(systemName: "mappin.square")
-                        .foregroundStyle(.gray)
+                    Text(CountryFlags.findFlag(for: jobOffer!.client.country))
                         .padding(.leading, 10)
                     Text(jobOffer!.client.country)
                         .font(.custom("SFMono-Regular", fixedSize: 10))

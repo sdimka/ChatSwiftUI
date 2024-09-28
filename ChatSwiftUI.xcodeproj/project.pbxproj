@@ -51,6 +51,7 @@
 		13E47ADD2CA580BF00387ACF /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 13E47ADC2CA580BF00387ACF /* Lottie */; };
 		13E47ADF2CA6B26D00387ACF /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E47ADE2CA6B26D00387ACF /* RatingView.swift */; };
 		727EB89C2BEE4BAF0032C067 /* ChatSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */; };
+		7293786B2CA7FAD5003E1A96 /* CountryFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7293786A2CA7FAC4003E1A96 /* CountryFlags.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +95,7 @@
 		13B1089B2B7B44B400FA34AA /* ChatSwiftUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChatSwiftUI.entitlements; sourceTree = "<group>"; };
 		13E47ADE2CA6B26D00387ACF /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		727EB89B2BEE4BAF0032C067 /* ChatSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSelectorView.swift; sourceTree = "<group>"; };
+		7293786A2CA7FAC4003E1A96 /* CountryFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryFlags.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 		137272252CA00D2000BE750E /* Offers */ = {
 			isa = PBXGroup;
 			children = (
+				7293786A2CA7FAC4003E1A96 /* CountryFlags.swift */,
 				137272262CA00D3C00BE750E /* OffersView.swift */,
 				137272282CA00DFA00BE750E /* OffersViewModel.swift */,
 				137272312CA066C400BE750E /* LottieView.swift */,
@@ -360,6 +363,7 @@
 				1372723C2CA2B3E800BE750E /* SelectorView.swift in Sources */,
 				133DADED2B80B2E400A38ABE /* Params.swift in Sources */,
 				1386DFE52BEE196C00C50956 /* Chat.swift in Sources */,
+				7293786B2CA7FAD5003E1A96 /* CountryFlags.swift in Sources */,
 				137272382CA1A86B00BE750E /* OfferView.swift in Sources */,
 				139EBA672B7D046800F31080 /* AIService.swift in Sources */,
 				727EB89C2BEE4BAF0032C067 /* ChatSelectorView.swift in Sources */,
