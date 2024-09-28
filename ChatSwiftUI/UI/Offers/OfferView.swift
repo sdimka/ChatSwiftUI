@@ -61,10 +61,24 @@ struct OfferView: View {
                     }.padding(.trailing, 20)
                 }
                 
+                offerPayment()
+
                 ExpandableText(jobOffer!.description, lineLimit: 3)
                     .font(.custom("SFMono-Regular", fixedSize: 14))
                     .padding(.horizontal, 15)
                     .textSelection(.enabled)
+                
+                NewFlowLayout(alignment: .leading) {
+                    ForEach(jobOffer!.tags) { tag in
+                        Text(tag.name)
+                            .padding(8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.gray.opacity(0.3))
+                                )
+                    }
+                }.padding(.horizontal, 15)
+                             
                 
                 HStack {
                     
@@ -120,9 +134,33 @@ struct OfferView: View {
         .listRowSeparator(.hidden)
     }
                          
-    func paymentType(_ strData: Bool) -> String {
-        if strData { return "verified" }
-        return "not verified"
+    private func offerPayment() -> some View {
+        
+        return HStack {
+            if let jobOffer = jobOffer {
+                if jobOffer.jobType == 1 {
+                    Text("Fixed price")
+                        .font(.custom("SFMono-Regular", fixedSize: 14))
+                        .foregroundColor(.gray)
+                    if let amount = jobOffer.amount {
+                        Text("$\(amount, specifier: "%.2f")")
+                            .font(.custom("SFMono-Bold", fixedSize: 14))
+                            .foregroundColor(.gray)
+                    }
+                } else if jobOffer.jobType == 2 {
+                    Text("Hourly price")
+                        .font(.custom("SFMono-Regular", fixedSize: 14))
+                        .foregroundColor(.gray)
+                    if let hourlyBudget = jobOffer.hourlyBudget {
+                        Text("$\(hourlyBudget)")
+                            .font(.custom("SFMono-Bold", fixedSize: 14))
+                            .foregroundColor(.gray)
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 15)
+        .padding(.bottom, 10)
     }
     
 }

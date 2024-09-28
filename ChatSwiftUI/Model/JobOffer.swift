@@ -50,7 +50,7 @@ struct JobOffer: Hashable, Identifiable, Codable {
         }
     }
 
-    struct Tag: Codable, Hashable {
+    struct Tag: Codable, Identifiable, Hashable {
         let name: String
         let id: String
     }
