@@ -11,6 +11,7 @@ struct OfferView: View {
     
     @State var jobOffer: JobOffer?
     var setStatus: (JobOffer, Int) -> Void
+    @Environment(\.openURL) var openLink
     
     var paymentVerificationColor: Color {
         jobOffer?.client.paymentVerificationStatus == true ? .green : .gray
@@ -52,7 +53,10 @@ struct OfferView: View {
                     }
                     
                     Button {
-                        
+                        guard let url_link = URL(string:jobOffer!.url) else {
+                            return
+                        }
+                        openLink(url_link)
                     } label: {
                         Image(systemName: "arrow.up.forward.app")
                             .resizable(resizingMode: .stretch)
