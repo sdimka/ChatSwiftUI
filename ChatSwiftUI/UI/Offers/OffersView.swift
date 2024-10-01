@@ -14,6 +14,8 @@ struct OffersView: View {
     
     @State private var viewModel = Resolver.resolve(OffersViewModel.self)
     
+    @State private var showingAlert = false
+    
     var body: some View {
         VStack {
             
@@ -50,5 +52,17 @@ struct OffersView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.blue.opacity(0.3))
         .navigationTitle("Second Navigation Title")
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("Error!"), 
+                message: Text(viewModel.currentError?.localizedDescription ?? "No description"),
+                dismissButton: .default(Text("OK")) {
+                    viewModel.dismissError()
+                }
+            )
+        }
+        .onChange(of: viewModel.currentError, {
+            showingAlert = (viewModel.currentError != nil)
+        })
     }
 }
